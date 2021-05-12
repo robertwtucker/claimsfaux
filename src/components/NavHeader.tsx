@@ -2,12 +2,15 @@
  * Copyright (c) 2021 Quadient Group AG
  */
 import React from 'react'
-import { Header, Box, Text, Nav } from 'grommet'
-import { Notification, User, CaretDown, CircleQuestion } from 'grommet-icons'
+import { useHistory } from 'react-router-dom'
+import { Header, Box, Text, Nav, Menu } from 'grommet'
+import { Notification, User, FormDown, CircleQuestion } from 'grommet-icons'
 import Logo from './Logo'
 import { AnchorLink } from './AnchorLink'
 
 const NavHeader: React.FC = () => {
+  const history = useHistory()
+
   return (
     <Header
       background="light-4"
@@ -19,16 +22,31 @@ const NavHeader: React.FC = () => {
       <Box fill="horizontal" direction="row" align="center" justify="between">
         <Nav direction="row" align="center" justify="start">
           <AnchorLink to="/claims" label="Claims" />
-          <AnchorLink to="/settings" label="Settings" />
         </Nav>
-        <Box direction="row" align="center" justify="center" gap="small">
+        <Box
+          direction="row"
+          align="center"
+          justify="center"
+          gap="medium"
+          pad={{ horizontal: 'small' }}
+        >
           <Notification />
           <CircleQuestion />
-          <Box direction="row" align="center" justify="start" gap="xxsmall">
-            <User size="small" />
-            <Text size="small">Kevin Edwards</Text>
-            <CaretDown size="small" />
-          </Box>
+          <Menu
+            items={[
+              { label: 'user@domain.com', disabled: true },
+              {
+                label: 'Settings',
+                onClick: () => history.push('/settings'),
+              },
+            ]}
+          >
+            <Box direction="row" align="center" justify="start" gap="xxsmall">
+              <User />
+              <Text>Kevin Edwards</Text>
+              <FormDown />
+            </Box>
+          </Menu>
         </Box>
       </Box>
     </Header>
