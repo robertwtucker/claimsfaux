@@ -10,10 +10,10 @@ import {
   DataTable,
   Header,
   Main,
-  Sidebar,
   Text,
 } from 'grommet'
 import { Add } from 'grommet-icons'
+import TopSidebar from '../components/TopSidebar'
 
 const Claims: React.FC = () => {
   const history = useHistory()
@@ -26,17 +26,7 @@ const Claims: React.FC = () => {
 
   return (
     <Box direction="row" fill flex>
-      <Sidebar width="180px" background="light-1">
-        {['Claims', 'Policies', 'Activities', 'Contacts', 'Documents'].map(
-          (label) => (
-            <Box key={label} pad="small">
-              <Button plain key={label}>
-                <Text>{label}</Text>
-              </Button>
-            </Box>
-          )
-        )}
-      </Sidebar>
+      <TopSidebar />
       <Main pad="small">
         <Header>
           <Text size="xlarge">Claims</Text>
