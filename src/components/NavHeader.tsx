@@ -3,10 +3,9 @@
  */
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { Header, Box, Text, Nav, Menu } from 'grommet'
-import { Notification, User, FormDown, CircleQuestion } from 'grommet-icons'
+import { Box, Header, Menu, Text } from 'grommet'
+import { CircleQuestion, FormDown, Notification, User } from 'grommet-icons'
 import Logo from './Logo'
-import { AnchorLink } from './AnchorLink'
 
 const NavHeader: React.FC = () => {
   const history = useHistory()
@@ -19,10 +18,7 @@ const NavHeader: React.FC = () => {
       align="center"
     >
       <Logo />
-      <Box fill="horizontal" direction="row" align="center" justify="between">
-        <Nav direction="row" align="center" justify="start">
-          <AnchorLink to="/claims" label="Claims" />
-        </Nav>
+      <Box fill="horizontal" direction="row" align="center" justify="end">
         <Box
           direction="row"
           align="center"
