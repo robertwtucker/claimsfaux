@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { Box, Header, Menu, Text } from 'grommet'
+import { Box, Menu, Text } from 'grommet'
 import { CircleQuestion, FormDown, Notification, User } from 'grommet-icons'
 import Logo from './Logo'
 
@@ -11,14 +11,15 @@ const NavHeader: React.FC = () => {
   const history = useHistory()
 
   return (
-    <Header
-      background="light-4"
+    <Box
+      background="dark-1"
       direction="row-responsive"
-      justify="start"
+      fill="horizontal"
+      justify="between"
       align="center"
     >
       <Logo />
-      <Box fill="horizontal" direction="row" align="center" justify="end">
+      <Box direction="row" align="center">
         <Box
           direction="row"
           align="center"
@@ -26,8 +27,12 @@ const NavHeader: React.FC = () => {
           gap="medium"
           pad={{ horizontal: 'small' }}
         >
-          <Notification />
-          <CircleQuestion />
+          <Box border="right">
+            <Notification />
+          </Box>
+          <Box>
+            <CircleQuestion />
+          </Box>
           <Menu
             items={[
               { label: 'user@domain.com', disabled: true },
@@ -45,7 +50,7 @@ const NavHeader: React.FC = () => {
           </Menu>
         </Box>
       </Box>
-    </Header>
+    </Box>
   )
 }
 

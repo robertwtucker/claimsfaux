@@ -44,7 +44,7 @@ const ClaimSidebar: React.FC<IProps> = ({ id }) => {
   }
 
   return (
-    <Box width="180px" background="light-1">
+    <Box width="small" background="light-2">
       {[
         'Summary',
         'Claim data',
@@ -67,6 +67,7 @@ const ClaimSidebar: React.FC<IProps> = ({ id }) => {
           onClick={handleClick}
           hoverIndicator={{
             background: 'background-contrast',
+            elevation: 'small',
           }}
         >
           <Text>{key}</Text>

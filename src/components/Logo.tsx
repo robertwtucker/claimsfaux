@@ -17,7 +17,7 @@ const Logo: React.FC = () => {
       justify="center"
       gap="small"
       pad={{ horizontal: 'medium', vertical: 'small' }}
-      width="200px"
+      width="small"
       onClick={() => history.push('/claims')}
       focusIndicator={false}
     >

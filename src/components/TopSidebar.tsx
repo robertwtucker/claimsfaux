@@ -22,7 +22,7 @@ const TopSidebar: React.FC = () => {
   }
 
   return (
-    <Box width="178px" background="light-1">
+    <Box width="small" background="light-2">
       {[
         'Claims',
         'Policies',
@@ -42,6 +42,7 @@ const TopSidebar: React.FC = () => {
           onClick={handleClick}
           hoverIndicator={{
             background: 'background-contrast',
+            elevation: 'small',
           }}
         >
           <Text>{key}</Text>
