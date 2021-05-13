@@ -1,0 +1,315 @@
+{
+  "Clients": [
+    {
+      "ClientID": "L81054",
+      "MailFrom": "userlogin@emaildomain.com",
+      "TicketAsignee": "userlogin@emaildomain.com",
+      "FirstName": "John",
+      "Midname": "",
+      "LastName": "Smith",
+      "Gender": "M",
+      "Title": "",
+      "Salutation": "Smith",
+      "Language": "en_us",
+      "AddressSalutation": "Mr.",
+      "AddressLines": [
+        {
+          "AddressLine": "4488 Main Street"
+        }
+      ],
+      "City": "Columbus",
+      "Zip": "43220",
+      "State": "Ohio",
+      "StateAbbreviation": "OH",
+      "Country": "US",
+      "Email": "inspire.correspondence@gmail.com",
+      "PolicyType": "Automobile",
+      "Role": "Claimant",
+      "Age": "58",
+      "DateOfBirth": "2/12/1958",
+      "SocialSecurityNumber": "123-46-9990",
+      "PhoneNumber": "614-877-4533",
+      "CellNumber": "614-555-2233",
+      "DriversLicenseNumber": "RR12345778",
+      "FraudIndicator": "No",
+      "ChannelPreference": "Email",
+      "Subject": "Response to claim",
+      "FollowUpDate": "8/31/2017",
+      "Template": "Closed Without Payment",
+      "FreeFormVariable1": "",
+      "FreeFormVariable2": "",
+      "FreeFormVariable3": "",
+      "FreeFormVariable4": "",
+      "FreeFormVariable5": "",
+      "FreeFormVariable6": "",
+      "FreeFormVariable7": "",
+      "FreeFormVariable8": "",
+      "FreeFormVariable9": "",
+      "FreeFormVariable10": "",
+      "ClaimsRepresentative": {
+        "FirstName": "Darla",
+        "LastName": "Stephens",
+        "AddressLines": [
+          {
+            "AddressLine": "1244 Main Street"
+          }
+        ],
+        "City": "Columbus",
+        "State": "OH",
+        "Zip": "43221-1234",
+        "PhoneNumber": "1-888-679-3331",
+        "Email": "DarlaStephens@TargetInsurance.com",
+        "CellNumber": "614-221-0000"
+      },
+      "Claim": {
+        "Number": "333-222-234",
+        "Date": "10/31/2016",
+        "DateOfLoss": "8/30/2016",
+        "TimeOfLoss": "12:00 am",
+        "AmountDemanded": "100000",
+        "Location": "Intersection of Broad and High Street, Columbus OH",
+        "State": "OH",
+        "LossDescription": "Hail damage to roof, missing 13 shingles",
+        "InjuryDescription": "Right thumb broken, laceration on left cheek",
+        "SpouseName": "Gloria Miller-James",
+        "NumberOfDependents": "2",
+        "DeathDate": "10/2/2016",
+        "SubrogationAmount": "5675.43",
+        "SalvageAmount": "2612.55",
+        "PaidClaimAmount": "20455.78",
+        "VehicleActualCashValue": "13203.88",
+        "ArbitrationDate": "1/25/2017",
+        "SettlementAmount": "56777.78",
+        "LetterReceivedDate": "1/12/2017",
+        "ClaimantCompanyName": "Target Insurance Company",
+        "CaseDescription": "John Smith VS. Vital Insurance Company",
+        "CaseDateFiled": "2/2/2017",
+        "CaseNumber": "SN900-233-12121",
+        "AutoInsurance": {
+          "PreApprovalDate": "12/10/2020",
+          "InsuredSince": "10/10/2017",
+          "VehicleYear": "2017",
+          "VehicleMake": "Audi",
+          "VehicleModel": "Q7",
+          "VIN": "NU89773456Y78TT09",
+          "VehicleDamage": "Damage to windshield and passenger side corner panel",
+          "VehicleLicenseNumber": "DGM 6779",
+          "Mileage": "165850",
+          "PreviousPremium": "1856",
+          "NewPremium": "1572"
+        }
+      },
+      "Author": {
+        "FirstName": "Michael",
+        "Midname": "",
+        "LastName": "Lee",
+        "Email": "inspire.correspondence@gmail.com",
+        "PhoneNumber": "18 158 664 232",
+        "PhoneNumberExt": "36 111 664 232",
+        "CellNumber": "07 898 664 232",
+        "Job": "Sales Representative",
+        "Image": "exleyFoto.png",
+        "Signature": "LoraSloan.png"
+      },
+      "Party": {
+        "Data": {
+          "Name": "Jimmy",
+          "Midname": "",
+          "Surname": "Jones",
+          "Title": "Producer",
+          "Company": "Insurance Specialist Agency of Ohio",
+          "AddressLines": [
+            {
+              "AddressLine": "14024 Northeast 4th Street"
+            }
+          ],
+          "City": "Seattle",
+          "Zip": "98101",
+          "State": "WA",
+          "Role": "Mortgagee",
+          "WebSite": "www.InsuranceSpecialistOH.com",
+          "Email": "inspire.correspondence@gmail.com",
+          "ProviderTINnumber": "177777"
+        }
+      },
+      "Dependents": {
+        "Data": [
+          {
+            "Name": "John",
+            "Midname": "",
+            "Surname": "Smiley",
+            "Gender": "M",
+            "Email": "jsmiley@gmail.com",
+            "MedicalProvider": {
+              "Name": "Dublin Family Physicians",
+              "AddressLines": [
+                {
+                  "AddressLine": "14024 Northeast 4th Street"
+                }
+              ],
+              "City": "Dublin",
+              "Zip": "43227",
+              "State": "OH"
+            }
+          },
+          {
+            "Name": "John",
+            "Midname": "",
+            "Surname": "Smiley",
+            "Gender": "M",
+            "Email": "jsmiley@gmail.com",
+            "MedicalProvider": {
+              "Name": "Miles of Smiles Dentistry",
+              "AddressLines": [
+                {
+                  "AddressLine": "3455 Muirfield Drive"
+                }
+              ],
+              "City": "Dublin",
+              "Zip": "43226",
+              "State": "OH"
+            }
+          },
+          {
+            "Name": "Sarah",
+            "Midname": "",
+            "Surname": "Smiley",
+            "Gender": "F",
+            "Email": "jsmiley@gmail.com",
+            "MedicalProvider": {
+              "Name": "Miles of Smiles Dentistry",
+              "AddressLines": [
+                {
+                  "AddressLine": "3455 Muirfield Drive"
+                }
+              ],
+              "City": "Dublin",
+              "Zip": "43226",
+              "State": "OH"
+            }
+          },
+          {
+            "Name": "Trevor",
+            "Midname": "",
+            "Surname": "Smiley",
+            "Gender": "M",
+            "Email": "jsmiley@gmail.com",
+            "MedicalProvider": {
+              "Name": "Miles of Smiles Dentistry",
+              "AddressLines": [
+                {
+                  "AddressLine": "3455 Muirfield Drive"
+                }
+              ],
+              "City": "Dublin",
+              "Zip": "43226",
+              "State": "OH"
+            }
+          }
+        ]
+      },
+      "Policy": {
+        "CoverageDeductible": "250",
+        "CoverageLimit": "10000",
+        "DriversLicense": "RE8900000",
+        "LogoFileName": "bullseye.img",
+        "PolicyCompanyAddressLine1": "A Member Of The Cherokee Group",
+        "PolicyCompanyAddressLine2": "1234 Main Street",
+        "PolicyCompanyAddressLine3": "Suite 999",
+        "PolicyCompanyCode": [
+          {
+            "PCData": "85"
+          },
+          {
+            "PCData": "Columbus"
+          }
+        ],
+        "PolicyCompanyName": "Target Insurance Company",
+        "PolicyCompanyPhoneNumber": "800-555-1220",
+        "PolicyCompanyState": "OH",
+        "PolicyCompanyWebsite": "www.targetinsurance.com",
+        "PolicyCompanyZip": "43221-1234",
+        "PolicyCoverageDescription": "Property Damage",
+        "PolicyEffectiveDate": "6/12/2016",
+        "PolicyHolderAddressLine1": "8543 Broad Street",
+        "PolicyHolderBirthdate": "01/20/1968",
+        "PolicyHolderCellNumber": "(919) 777-7676",
+        "PolicyHolderCity": "Cleveland",
+        "PolicyHolderEmail": "jamesjones24@gmail.com",
+        "PolicyHolderMidname": "",
+        "PolicyHolderName": "James",
+        "PolicyHolderPhoneNumber": "(919) 781-2704",
+        "PolicyHolderRole": "First Insured",
+        "PolicyHolderSocialSecurityNumber": "444-90-2354",
+        "PolicyHolderState": "NC",
+        "PolicyHolderSurname": "Johnes",
+        "PolicyHolderZip": "27612",
+        "PolicyNumber": "PAG 456-8888",
+        "VIN": "JJ12764N98PP0226",
+        "VehicleMake": "Lexus",
+        "VehicleModel": "RX",
+        "VehicleYear": "2016"
+      },
+      "Policies": {
+        "Data": {
+          "PolicyHolder": {
+            "Name": "James",
+            "Midname": "",
+            "Surname": "Johnes",
+            "AddressLines": [
+              {
+                "AddressLine": "8543 Broad Street"
+              }
+            ],
+            "City": "Cleveland",
+            "Zip": "27612",
+            "State": "NC",
+            "Email": "jamesjones24@gmail.com",
+            "Birthdate": "01/20/1968",
+            "PhoneNumber": "(919) 781-2704",
+            "CellNumber": "(919) 777-7676",
+            "SocialSecurityNumber": "444-90-2354",
+            "Role": "First Insured"
+          },
+          "AutoInsurance": {
+            "VehicleYear": "2016",
+            "VehicleMake": "Lexus",
+            "VehicleModel": "RX",
+            "VIN": "JJ12764N98PP0226",
+            "DriversLicense": "RE8900000"
+          },
+          "PolicyNumber": "PAG 456-8888",
+          "PolicyEffectiveDate": "6/12/2016",
+          "PolicyCoverageDescription": "Property Damage",
+          "CoverageLimit": "10000",
+          "CoverageDeductible": "250",
+          "Company": {
+            "Code": "85",
+            "Name": "Target Insurance Company",
+            "AddressLines": [
+              {
+                "AddressLine": "A Member Of The Cherokee Group"
+              },
+              {
+                "AddressLine": "1234 Main Street"
+              },
+              {
+                "AddressLine": "Suite 999"
+              }
+            ],
+            "City": "Columbus",
+            "Zip": "43221-1234",
+            "State": "OH",
+            "PhoneNumber": "800-555-1220",
+            "Website": "www.targetinsurance.com"
+          },
+          "LogoFileName": "bullseye.img"
+        }
+      },
+      "Others": {
+        "Key": "",
+        "Value": ""
+      }
+    }
+  ]
+}
