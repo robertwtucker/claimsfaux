@@ -65,7 +65,7 @@ const ClaimSummary: React.FC = () => {
         <Header>
           <Text size="xlarge">Claim Summary</Text>
         </Header>
-        <Box direction="row-responsive" pad="medium" gap="medium">
+        <Box direction="row-responsive" pad="small" gap="medium">
           <Box gap="medium">
             <Card>
               <Header pad="small" background="brand">
