@@ -198,7 +198,7 @@ const ClaimSummary: React.FC = () => {
                     type="bar"
                     size="small"
                     thickness="xsmall"
-                    background="light-2"
+                    background="light-4"
                     value={(23 / 60) * 100}
                   />
                   <Text size="small">23 days (target 60)</Text>
@@ -209,7 +209,7 @@ const ClaimSummary: React.FC = () => {
                   <Stack anchor="center">
                     <Meter
                       type="circle"
-                      background="light-2"
+                      background="light-4"
                       thickness="small"
                       size="xsmall"
                       value={(20455 / 100000) * 100}
