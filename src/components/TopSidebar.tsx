@@ -3,24 +3,26 @@
  */
 import React, { MouseEvent } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Box, Button, Sidebar, Text } from 'grommet'
+import { Box, Text } from 'grommet'
 
 const TopSidebar: React.FC = () => {
   const history = useHistory()
 
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: MouseEvent<HTMLElement>) => {
     event.preventDefault()
-    switch (event.currentTarget.id) {
-      case 'Claims':
-        history.push(`/claims`)
-        break
-      default:
-      //no op
+    if (event && event.currentTarget) {
+      switch (event.currentTarget.id) {
+        case 'Claims':
+          history.push(`/claims`)
+          break
+        default:
+        //no op
+      }
     }
   }
 
   return (
-    <Sidebar width="180px" background="light-1">
+    <Box width="178px" background="light-1">
       {[
         'Claims',
         'Policies',
@@ -31,13 +33,21 @@ const TopSidebar: React.FC = () => {
         'Templates',
         'Archive',
       ].map((key) => (
-        <Box key={key} pad="small">
-          <Button plain id={key} onClick={handleClick}>
-            <Text>{key}</Text>
-          </Button>
+        <Box
+          id={key}
+          key={key}
+          pad="small"
+          border="bottom"
+          focusIndicator={false}
+          onClick={handleClick}
+          hoverIndicator={{
+            background: 'background-contrast',
+          }}
+        >
+          <Text>{key}</Text>
         </Box>
       ))}
-    </Sidebar>
+    </Box>
   )
 }
 

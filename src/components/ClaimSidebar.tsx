@@ -3,7 +3,7 @@
  */
 import React, { MouseEvent } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Box, Button, Sidebar, Text } from 'grommet'
+import { Box, Text } from 'grommet'
 
 // enum SidebarOptions {
 //   SUMMARY = 'Summary',
@@ -27,7 +27,7 @@ interface IProps {
 const ClaimSidebar: React.FC<IProps> = ({ id }) => {
   const history = useHistory()
 
-  const handleSidebarClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     if (event && event.currentTarget) {
       switch (event.currentTarget.id) {
@@ -44,7 +44,7 @@ const ClaimSidebar: React.FC<IProps> = ({ id }) => {
   }
 
   return (
-    <Sidebar width="180px" background="light-1">
+    <Box width="180px" background="light-1">
       {[
         'Summary',
         'Claim data',
@@ -58,13 +58,21 @@ const ClaimSidebar: React.FC<IProps> = ({ id }) => {
         'History',
         'Calendar',
       ].map((key) => (
-        <Box key={key} pad="small">
-          <Button plain id={key} onClick={handleSidebarClick}>
-            <Text>{key}</Text>
-          </Button>
+        <Box
+          id={key}
+          key={key}
+          pad="small"
+          border="bottom"
+          focusIndicator={false}
+          onClick={handleClick}
+          hoverIndicator={{
+            background: 'background-contrast',
+          }}
+        >
+          <Text>{key}</Text>
         </Box>
       ))}
-    </Sidebar>
+    </Box>
   )
 }
 
