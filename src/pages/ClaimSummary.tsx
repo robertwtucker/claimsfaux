@@ -59,7 +59,7 @@ const ClaimSummary: React.FC = () => {
   }, [state.loading])
 
   return (
-    <Box direction="row" fill flex>
+    <Box direction="row" background="light-1" fill flex>
       <ClaimSidebar id={id} />
       <Main pad="small">
         <Header>
