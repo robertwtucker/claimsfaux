@@ -45,6 +45,12 @@ const initialState: State = {
   error: undefined,
 }
 
+const amountFormatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 0,
+})
+
 const ClaimSummary: React.FC = () => {
   const { id } = useParams<{ id: string }>()
   const [state, dispatch] = React.useReducer(reducer, initialState)
@@ -147,7 +153,11 @@ const ClaimSummary: React.FC = () => {
                   >
                     <Text size="small">Reserves:</Text>
                     <Text weight="bold">
-                      {state.claimData?.Claim.AmountDemanded}
+                      {amountFormatter.format(
+                        Number.parseInt(
+                          state.claimData?.Claim.AmountDemanded as string
+                        )
+                      )}
                     </Text>
                   </Box>
                 </Box>
