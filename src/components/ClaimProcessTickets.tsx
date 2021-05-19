@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import axios from 'axios'
-import { ColumnConfig, DataTable } from 'grommet'
+import { ColumnConfig, DataTable, Text } from 'grommet'
 
 export interface IInteractiveProcessTicketListResponse {
   items?: IInteractiveProcessTicketItem[]
@@ -149,6 +149,12 @@ const ClaimProcessTickets: React.FC<IProps> = ({ id }) => {
       const url = `https://inspiredemo.sptcloud.com/interactive/?interactive-process-ticket-id=${item.guid}`
       window.open(url, '_blank', 'noopener')
     }
+  }
+
+  if (state.loading) {
+    return <Text>Loading...</Text>
+  } else if (state.error) {
+    return <Text>{state.error}</Text>
   }
 
   return (
