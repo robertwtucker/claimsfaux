@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import { Box, Card, Header, Main, Meter, Paragraph, Stack, Text } from 'grommet'
 import ClaimSidebar from '../components/ClaimSidebar'
 import { ClaimDataRow, ClientsEntity } from '../components/ClaimsData'
+import ClaimProcessTickets from '../components/ClaimProcessTickets'
 
 type State = {
   claimData?: ClientsEntity
@@ -176,11 +177,11 @@ const ClaimSummary: React.FC = () => {
             <Card>
               <Header pad="small" background="brand">
                 <Text weight="bold" color="white">
-                  Correspondence
+                  Communications in Process
                 </Text>
               </Header>
-              <Box pad="xlarge">
-                <Text>Document stuff goes here</Text>
+              <Box pad="small">
+                <ClaimProcessTickets id={id} />
               </Box>
             </Card>
           </Box>
