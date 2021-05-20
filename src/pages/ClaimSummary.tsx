@@ -67,7 +67,7 @@ const ClaimSummary: React.FC = () => {
 
   return (
     <Box direction="row" background="light-1" fill flex>
-      <ClaimSidebar id={id} />
+      <ClaimSidebar claimId={id} />
       <Main pad="small">
         <Header>
           <Text size="xlarge">Claim Summary</Text>

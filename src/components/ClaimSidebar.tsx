@@ -20,11 +20,11 @@ import { Box, Text } from 'grommet'
 //   CALENDAR = 'Calendar',
 // }
 
-interface IProps {
-  id: string
+interface IClaimSidebarProps {
+  claimId: string
 }
 
-const ClaimSidebar: React.FC<IProps> = ({ id }) => {
+const ClaimSidebar: React.FC<IClaimSidebarProps> = ({ claimId }) => {
   const history = useHistory()
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -32,10 +32,10 @@ const ClaimSidebar: React.FC<IProps> = ({ id }) => {
     if (event && event.currentTarget) {
       switch (event.currentTarget.id) {
         case 'Summary':
-          history.push(`/claims/${id}`)
+          history.push(`/claims/${claimId}`)
           break
         case 'Claim Data':
-          history.push(`/claims/${id}/data`)
+          history.push(`/claims/${claimId}/data`)
           break
         default:
         //no op
