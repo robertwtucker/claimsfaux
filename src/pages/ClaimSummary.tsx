@@ -181,7 +181,7 @@ const ClaimSummary: React.FC = () => {
                 </Text>
               </Header>
               <Box pad="small">
-                <ClaimProcessTickets id={id} />
+                <ClaimProcessTickets claimId={id} />
               </Box>
             </Card>
           </Box>

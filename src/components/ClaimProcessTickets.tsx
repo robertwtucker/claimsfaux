@@ -2,15 +2,16 @@
  * Copyright (c) 2021 Quadient Group AG
  */
 import React from 'react'
+import qs from 'qs'
 import axios from 'axios'
 import { ColumnConfig, DataTable, Text } from 'grommet'
 
 export interface IInteractiveProcessTicketListResponse {
-  items?: IInteractiveProcessTicketItem[]
+  items?: IInteractiveProcessTicketListItem[]
   totalCount?: number
 }
 
-export interface IInteractiveProcessTicketItem {
+export interface IInteractiveProcessTicketListItem {
   id?: number
   guid?: string
   name?: string
@@ -23,10 +24,10 @@ export interface IInteractiveProcessTicketItem {
   created?: number
   changed?: number
   moduleType?: string
-  systemVariables?: IInteractiveProcessTicketSystemVariables
+  systemVariables?: IInteractiveProcessTicketListItemSystemVariables
 }
 
-export interface IInteractiveProcessTicketSystemVariables {
+export interface IInteractiveProcessTicketListItemSystemVariables {
   Multiapprove_Users?: string
   Created_User?: string
   'alternatives ID'?: string
@@ -46,7 +47,7 @@ export interface IInteractiveProcessTicketSystemVariables {
 }
 
 type State = {
-  tickets?: IInteractiveProcessTicketItem[]
+  tickets?: IInteractiveProcessTicketListItem[]
   loading: boolean
   error?: any
 }
@@ -59,7 +60,7 @@ enum ActionKind {
 type Action =
   | {
       type: ActionKind.ApiCallSuccess
-      payload: IInteractiveProcessTicketItem[]
+      payload: IInteractiveProcessTicketListItem[]
     }
   | { type: ActionKind.ApiCallError; payload: string }
 
@@ -86,46 +87,47 @@ const initialState: State = {
   error: undefined,
 }
 
-interface IProps {
-  id: string
+interface IClaimProcessTicketsProps {
+  claimId: string
 }
 
-const ClaimProcessTickets: React.FC<IProps> = ({ id }) => {
+const ClaimProcessTickets: React.FC<IClaimProcessTicketsProps> = ({
+  claimId,
+}) => {
   const [state, dispatch] = React.useReducer(reducer, initialState)
 
   React.useEffect(() => {
     const getTicketsForClaim = async () => {
       // TODO: Externalize URLs, keys and user auth
+      const authParams = qs.stringify({
+        apiKey: 'KN0gla8.ANxI0Z82f38PCNGhZOrqIJWjBOjOc2jzXt0',
+        userName: 'writer',
+      })
+
       try {
-        const tokenUrl =
-          'https://inspiredemo.sptcloud.com/interactive/api/v1/access-token'
-        const authParams = new URLSearchParams()
-        authParams.append(
-          'apiKey',
-          'KN0gla8.ANxI0Z82f38PCNGhZOrqIJWjBOjOc2jzXt0'
-        )
-        authParams.append('userName', 'writer')
-        const authConfig = {
+        const authResponse = await axios({
+          method: 'POST',
+          url: 'https://inspiredemo.sptcloud.com/interactive/api/v1/access-token',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
-        }
-        const authResponse = await axios.post(tokenUrl, authParams, authConfig)
+          data: authParams,
+        })
 
-        const url =
-          'https://inspiredemo.sptcloud.com/interactive/api/v1/interactive-process-ticket/list'
-        const config = {
-          headers: {
-            Authorization: `Bearer ${authResponse.data}`,
-          },
-        }
         const listResponse =
-          await axios.get<IInteractiveProcessTicketListResponse>(url, config)
+          await axios.request<IInteractiveProcessTicketListResponse>({
+            method: 'GET',
+            url: 'https://inspiredemo.sptcloud.com/interactive/api/v1/interactive-process-ticket/list',
+            headers: {
+              Authorization: `Bearer ${authResponse.data}`,
+            },
+          })
 
         // console.log('list', listResponse.data)
-        const items = listResponse.data.items as IInteractiveProcessTicketItem[]
+        const items = listResponse.data
+          .items as IInteractiveProcessTicketListItem[]
         const tickets = items.filter(
-          (item) => item.contractId && item.contractId === id
+          (item) => item.contractId && item.contractId === claimId
         )
         // console.log('tickets', tickets)
         dispatch({
@@ -142,9 +144,9 @@ const ClaimProcessTickets: React.FC<IProps> = ({ id }) => {
     if (state.loading) {
       getTicketsForClaim()
     }
-  }, [state.loading, id])
+  }, [state.loading, claimId])
 
-  const handleClick = (item: IInteractiveProcessTicketItem) => {
+  const handleClick = (item: IInteractiveProcessTicketListItem) => {
     if (item && item.guid) {
       const url = `https://inspiredemo.sptcloud.com/interactive/?interactive-process-ticket-id=${item.guid}`
       window.open(url, '_blank', 'noopener')
@@ -169,7 +171,7 @@ const ClaimProcessTickets: React.FC<IProps> = ({ id }) => {
   )
 }
 
-const columns: ColumnConfig<IInteractiveProcessTicketItem>[] = [
+const columns: ColumnConfig<IInteractiveProcessTicketListItem>[] = [
   {
     property: 'id',
     header: 'ID',
