@@ -10,13 +10,12 @@ import {
   Form,
   FormField,
   Header,
-  Main,
   Select,
   Text,
   TextInput,
 } from 'grommet'
 import { Certificate, Home, UserManager } from 'grommet-icons'
-import ClaimSidebar from '../components/ClaimSidebar'
+import ClaimContent from '../components/ClaimContent'
 import { ClaimDataRow, ClientsEntity } from '../components/ClaimsData'
 
 export interface IDCFormData {
@@ -171,139 +170,136 @@ const ClaimData: React.FC = () => {
   }
 
   return (
-    <Box direction="row" background="light-1" fill flex>
-      <ClaimSidebar claimId={id} />
-      <Main pad="small">
-        <Header>
-          <Text size="xlarge">Claim Data</Text>
-        </Header>
-        <Form
-          value={state.dcFormData}
-          onChange={(nextValue) =>
-            dispatch({ type: ActionKind.DataChanged, payload: nextValue })
-          }
-          onSubmit={(event) => {
-            event.preventDefault()
-            event.stopPropagation()
-            handleSubmit(event.value)
-          }}
-        >
-          <Box direction="row-responsive" pad="small" gap="medium">
-            <Card>
-              <Header pad="small" background="brand">
-                <Text size="large" color="white">
-                  Claimant
-                </Text>
-              </Header>
-              <Box pad="small" gap="small">
-                <Box
-                  border={{ color: 'light-4', size: 'small' }}
-                  direction="row"
-                  pad="small"
-                  gap="medium"
-                >
-                  <UserManager size="large" />
-                  <Box>
-                    <FormField label="Salutation" name="AddressSalutation">
-                      <Select
-                        name="AddressSalutation"
-                        placeholder="Select"
-                        options={salutationOptions}
-                      />
-                    </FormField>
-                    <FormField label="First Name" name="Name">
-                      <TextInput name="Name" />
-                    </FormField>
-                    <FormField label="Last Name" name="Surname">
-                      <TextInput name="Surname" />
-                    </FormField>
-                    <FormField label="Gender" name="Gender">
-                      <Select
-                        name="Gender"
-                        labelKey="label"
-                        valueKey={{ key: 'value', reduce: true }}
-                        options={genderOptions}
-                      />
-                    </FormField>
-                  </Box>
-                </Box>
-                <Box
-                  border={{ color: 'light-4', size: 'small' }}
-                  direction="row"
-                  pad="small"
-                  gap="medium"
-                >
-                  <Home size="large" />
-                  <Box>
-                    <FormField label="City" name="City">
-                      <TextInput name="City" />
-                    </FormField>
-                    <FormField label="State" name="State">
-                      <TextInput name="State" />
-                    </FormField>
-                    <FormField label="Zip" name="Zip">
-                      <TextInput name="Zip" />
-                    </FormField>
-                  </Box>
+    <ClaimContent claimId={id}>
+      <Header>
+        <Text size="xlarge">Claim Data</Text>
+      </Header>
+      <Form
+        value={state.dcFormData}
+        onChange={(nextValue) =>
+          dispatch({ type: ActionKind.DataChanged, payload: nextValue })
+        }
+        onSubmit={(event) => {
+          event.preventDefault()
+          event.stopPropagation()
+          handleSubmit(event.value)
+        }}
+      >
+        <Box direction="row-responsive" pad="small" gap="medium">
+          <Card>
+            <Header pad="small" background="brand">
+              <Text size="large" color="white">
+                Claimant
+              </Text>
+            </Header>
+            <Box pad="small" gap="small">
+              <Box
+                border={{ color: 'light-4', size: 'small' }}
+                direction="row"
+                pad="small"
+                gap="medium"
+              >
+                <UserManager size="large" />
+                <Box>
+                  <FormField label="Salutation" name="AddressSalutation">
+                    <Select
+                      name="AddressSalutation"
+                      placeholder="Select"
+                      options={salutationOptions}
+                    />
+                  </FormField>
+                  <FormField label="First Name" name="Name">
+                    <TextInput name="Name" />
+                  </FormField>
+                  <FormField label="Last Name" name="Surname">
+                    <TextInput name="Surname" />
+                  </FormField>
+                  <FormField label="Gender" name="Gender">
+                    <Select
+                      name="Gender"
+                      labelKey="label"
+                      valueKey={{ key: 'value', reduce: true }}
+                      options={genderOptions}
+                    />
+                  </FormField>
                 </Box>
               </Box>
-            </Card>
-            <Card>
-              <Header pad="small" background="brand">
-                <Text size="large" color="white">
-                  Loss Details
-                </Text>
-              </Header>
-              <Box pad="small" gap="small">
-                <Box
-                  border={{ color: 'light-4', size: 'small' }}
-                  direction="row"
-                  pad="small"
-                  gap="medium"
-                >
-                  <Certificate size="large" />
-                  <Box>
-                    <FormField label="Claim Number" name="ClaimID">
-                      <TextInput name="ClaimID" />
-                    </FormField>
-                    <FormField label="Date of Loss" name="IncidentDate">
-                      <TextInput name="IncidentDate" />
-                    </FormField>
-                    <FormField label="Mileage" name="Mileage">
-                      <TextInput name="Mileage" />
-                    </FormField>
-                    <FormField
-                      label="Estimated Market Value"
-                      name="EstMarketValue"
-                    >
-                      <TextInput name="EstMarketValue" />
-                    </FormField>
-                    <FormField label="Deductible" name="Deduction">
-                      <TextInput name="Deduction" />
-                    </FormField>
-                  </Box>
+              <Box
+                border={{ color: 'light-4', size: 'small' }}
+                direction="row"
+                pad="small"
+                gap="medium"
+              >
+                <Home size="large" />
+                <Box>
+                  <FormField label="City" name="City">
+                    <TextInput name="City" />
+                  </FormField>
+                  <FormField label="State" name="State">
+                    <TextInput name="State" />
+                  </FormField>
+                  <FormField label="Zip" name="Zip">
+                    <TextInput name="Zip" />
+                  </FormField>
                 </Box>
               </Box>
-            </Card>
-            <Box pad="small" gap="small" justify="start" align="center">
-              <Button
-                primary
-                type="submit"
-                label="Save"
-                disabled={!state.isFormDirty}
-              />
-              <Button
-                label="Reset"
-                disabled={!state.isFormDirty}
-                onClick={() => {
-                  dispatch({ type: ActionKind.DataReset })
-                }}
-              />
             </Box>
+          </Card>
+          <Card>
+            <Header pad="small" background="brand">
+              <Text size="large" color="white">
+                Loss Details
+              </Text>
+            </Header>
+            <Box pad="small" gap="small">
+              <Box
+                border={{ color: 'light-4', size: 'small' }}
+                direction="row"
+                pad="small"
+                gap="medium"
+              >
+                <Certificate size="large" />
+                <Box>
+                  <FormField label="Claim Number" name="ClaimID">
+                    <TextInput name="ClaimID" />
+                  </FormField>
+                  <FormField label="Date of Loss" name="IncidentDate">
+                    <TextInput name="IncidentDate" />
+                  </FormField>
+                  <FormField label="Mileage" name="Mileage">
+                    <TextInput name="Mileage" />
+                  </FormField>
+                  <FormField
+                    label="Estimated Market Value"
+                    name="EstMarketValue"
+                  >
+                    <TextInput name="EstMarketValue" />
+                  </FormField>
+                  <FormField label="Deductible" name="Deduction">
+                    <TextInput name="Deduction" />
+                  </FormField>
+                </Box>
+              </Box>
+            </Box>
+          </Card>
+          <Box pad="small" gap="small" justify="start" align="center">
+            <Button
+              primary
+              type="submit"
+              label="Save"
+              disabled={!state.isFormDirty}
+            />
+            <Button
+              label="Reset"
+              disabled={!state.isFormDirty}
+              onClick={() => {
+                dispatch({ type: ActionKind.DataReset })
+              }}
+            />
           </Box>
-        </Form>
-      </Main>
-    </Box>
+        </Box>
+      </Form>
+    </ClaimContent>
   )
 }
 
