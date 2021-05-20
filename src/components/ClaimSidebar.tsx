@@ -34,7 +34,7 @@ const ClaimSidebar: React.FC<IProps> = ({ id }) => {
         case 'Summary':
           history.push(`/claims/${id}`)
           break
-        case 'Claim data':
+        case 'Claim Data':
           history.push(`/claims/${id}/data`)
           break
         default:
@@ -47,7 +47,7 @@ const ClaimSidebar: React.FC<IProps> = ({ id }) => {
     <Box width="small" background="light-2">
       {[
         'Summary',
-        'Claim data',
+        'Claim Data',
         'Workplan',
         'Exposures',
         'Policy',
