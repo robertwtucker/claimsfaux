@@ -278,6 +278,9 @@ const ClaimData: React.FC = () => {
                     >
                       <TextInput name="EstMarketValue" />
                     </FormField>
+                    <FormField label="Deductible" name="Deduction">
+                      <TextInput name="Deduction" />
+                    </FormField>
                   </Box>
                 </Box>
               </Box>
