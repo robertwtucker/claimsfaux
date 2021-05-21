@@ -1,9 +1,9 @@
 /**
  * Copyright (c) 2021 Quadient Group AG
  */
-import jsonObject from '../data/customer.json'
+import jsonObject from './customer.json'
 
-export interface ClaimsData {
+export interface ClaimsDataModel {
   Clients?: ClientsEntity[] | null
 }
 
@@ -1531,7 +1531,4 @@ function errorHelper(
   )
 }
 
-// const data = ClaimsDataProxy.Parse(JSON.stringify(jsonObject))
-const data = ClaimsDataProxy.Create(jsonObject)
-
-export const ClaimDataRow = data && data.Clients ? data.Clients[0] : undefined
+export const ClaimsData = ClaimsDataProxy.Create(jsonObject)
