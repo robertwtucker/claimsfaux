@@ -7,15 +7,18 @@ import { Grommet, Box } from 'grommet'
 import Theme from './Theme'
 import NavHeader from './NavHeader'
 import Routes from './Routes'
+import { DatabaseProvider } from '../contexts/DatabaseProvider'
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Grommet theme={Theme}>
-        <NavHeader />
-        <Box overflow="auto" flex>
-          <Routes />
-        </Box>
+        <DatabaseProvider>
+          <NavHeader />
+          <Box overflow="auto" flex>
+            <Routes />
+          </Box>
+        </DatabaseProvider>
       </Grommet>
     </BrowserRouter>
   )

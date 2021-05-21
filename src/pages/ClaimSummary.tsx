@@ -5,8 +5,9 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { Box, Card, Header, Meter, Paragraph, Stack, Text } from 'grommet'
 import ClaimContent from '../components/ClaimContent'
-import { ClaimDataRow, ClientsEntity } from '../components/ClaimsData'
+import { ClientsEntity } from '../data/Claims'
 import ClaimProcessTickets from '../components/ClaimProcessTickets'
+import { useDatabase } from '../contexts/DatabaseProvider'
 
 type State = {
   claimData?: ClientsEntity
@@ -55,15 +56,25 @@ const amountFormatter = new Intl.NumberFormat('en-US', {
 const ClaimSummary: React.FC = () => {
   const { id } = useParams<{ id: string }>()
   const [state, dispatch] = React.useReducer(reducer, initialState)
+  const db = useDatabase()
 
   React.useEffect(() => {
-    if (state.loading) {
+    const claims = db.getCollection('claims')
+    const claim = claims.findOne({ 'Claim.Number': { $eq: id } })
+    if (claim) {
       dispatch({
         type: ActionKind.Initialized,
-        payload: ClaimDataRow as ClientsEntity,
+        payload: claim,
+      })
+    } else {
+      const message = `Claim '${id}' was not found in the database.`
+      console.error(message)
+      dispatch({
+        type: ActionKind.Error,
+        payload: message,
       })
     }
-  }, [state.loading])
+  }, [db, id])
 
   return (
     <ClaimContent claimId={id}>

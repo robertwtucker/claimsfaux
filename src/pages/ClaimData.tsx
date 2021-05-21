@@ -16,7 +16,8 @@ import {
 } from 'grommet'
 import { Certificate, Home, UserManager } from 'grommet-icons'
 import ClaimContent from '../components/ClaimContent'
-import { ClaimDataRow, ClientsEntity } from '../components/ClaimsData'
+import { ClientsEntity } from '../data/Claims'
+import { useDatabase } from '../contexts/DatabaseProvider'
 
 export interface IDCFormData {
   IsInteractiveFormValid?: boolean
@@ -49,6 +50,7 @@ type State = {
 enum ActionKind {
   DataChanged = 'DATA_CHANGED',
   DataReset = 'DATA_RESET',
+  DataSaved = 'DATA_SAVED',
   Initialized = 'INITIALIZED',
   Error = 'ERROR',
 }
@@ -56,6 +58,7 @@ enum ActionKind {
 type Action =
   | { type: ActionKind.DataChanged; payload: IDCFormData }
   | { type: ActionKind.DataReset }
+  | { type: ActionKind.DataSaved; payload: IDCFormData }
   | { type: ActionKind.Initialized; payload: IDCFormData }
   | { type: ActionKind.Error; payload: string }
 
@@ -71,6 +74,12 @@ const reducer = (state: State, action: Action): State => {
       return {
         ...state,
         dcFormData: state.dcFormDataSaved,
+        isFormDirty: false,
+      }
+    case ActionKind.DataSaved:
+      return {
+        ...state,
+        dcFormDataSaved: action.payload,
         isFormDirty: false,
       }
     case ActionKind.Initialized:
@@ -121,6 +130,7 @@ const initialState: State = {
 const ClaimData: React.FC = () => {
   const { id } = useParams<{ id: string }>()
   const [state, dispatch] = React.useReducer(reducer, initialState)
+  const db = useDatabase()
   const salutationOptions = [
     'Mr.',
     'Mrs.',
@@ -139,15 +149,24 @@ const ClaimData: React.FC = () => {
   ]
 
   React.useEffect(() => {
-    if (state.loading) {
+    const claims = db.getCollection('claims')
+    const claim = claims.findOne({ 'Claim.Number': { $eq: id } })
+    if (claim) {
       dispatch({
         type: ActionKind.Initialized,
-        payload: getDCFormDataFromClaim(ClaimDataRow as ClientsEntity),
+        payload: getFormDataFromClaim(claim),
+      })
+    } else {
+      const message = `Claim '${id}' was not found in the database.`
+      console.error(message)
+      dispatch({
+        type: ActionKind.Error,
+        payload: message,
       })
     }
-  }, [state.loading])
+  }, [db, id])
 
-  const getDCFormDataFromClaim = (claimData: ClientsEntity) => {
+  const getFormDataFromClaim = (claimData: ClientsEntity) => {
     return {
       Gender: claimData.Gender,
       Name: claimData.FirstName,
@@ -165,8 +184,32 @@ const ClaimData: React.FC = () => {
   }
 
   const handleSubmit = (form: IDCFormData) => {
-    // TODO: Persist changes
-    console.log(form)
+    const claims = db.getCollection('claims')
+    if (claims) {
+      const claim = claims.findOne({ 'Claim.Number': { $eq: id } })
+      if (claim) {
+        claim.Gender = state.dcFormData.Gender
+        claim.FirstName = state.dcFormData.Name
+        claim.LastName = state.dcFormData.Surname
+        claim.City = state.dcFormData.City
+        claim.State = state.dcFormData.State
+        claim.Zip = state.dcFormData.Zip
+        claim.Claim.Number = state.dcFormData.ClaimID
+        claim.Claim.AutoInsurance.Mileage = state.dcFormData.Mileage
+        claim.Claim.VehicleActualCashValue = state.dcFormData.EstMarketValue
+        claim.Policy.CoverageDeductible = state.dcFormData.Deduction
+        claim.Salutation = state.dcFormData.AddressSalutation
+        claim.Claim.DateOfLoss = state.dcFormData.IncidentDate
+
+        claims.update(claim)
+        dispatch({
+          type: ActionKind.DataSaved,
+          payload: getFormDataFromClaim(claim),
+        })
+        return
+      }
+    }
+    console.error('Unable to save updates to the database.')
   }
 
   return (
