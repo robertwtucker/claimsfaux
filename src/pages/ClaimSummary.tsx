@@ -59,20 +59,22 @@ const ClaimSummary: React.FC = () => {
   const db = useDatabase()
 
   React.useEffect(() => {
-    const claims = db.getCollection('claims')
-    const claim = claims.findOne({ 'Claim.Number': { $eq: id } })
-    if (claim) {
-      dispatch({
-        type: ActionKind.Initialized,
-        payload: claim,
-      })
-    } else {
-      const message = `Claim '${id}' was not found in the database.`
-      console.error(message)
-      dispatch({
-        type: ActionKind.Error,
-        payload: message,
-      })
+    if (db && Boolean(Object.keys(db).length > 0)) {
+      const claims = db.getCollection('claims')
+      const claim = claims.findOne({ 'Claim.Number': { $eq: id } })
+      if (claim) {
+        dispatch({
+          type: ActionKind.Initialized,
+          payload: claim,
+        })
+      } else {
+        const message = `Claim '${id}' was not found in the database.`
+        console.error(message)
+        dispatch({
+          type: ActionKind.Error,
+          payload: message,
+        })
+      }
     }
   }, [db, id])
 

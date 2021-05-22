@@ -5,9 +5,66 @@ import React from 'react'
 import { Box, Button, Header, Main, Text } from 'grommet'
 import { Add } from 'grommet-icons'
 import TopSidebar from '../components/TopSidebar'
+import { useDatabase } from '../contexts/DatabaseProvider'
 import ClaimsDataTable from '../components/ClaimsDataTable'
+import { ClientsEntity } from '../data/Claims'
+
+type State = {
+  claims: ClientsEntity[]
+  loading: boolean
+  error?: any
+}
+
+enum ActionKind {
+  Initialized = 'INITIALIZED',
+  Error = 'ERROR',
+}
+
+type Action =
+  | { type: ActionKind.Initialized; payload: ClientsEntity[] }
+  | { type: ActionKind.Error; payload: string }
+
+const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case ActionKind.Initialized:
+      return {
+        ...state,
+        claims: action.payload,
+        loading: false,
+      }
+    case ActionKind.Error:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      }
+  }
+}
+
+const initialState: State = {
+  claims: [] as ClientsEntity[],
+  loading: true,
+  error: undefined,
+}
 
 const Claims: React.FC = () => {
+  const [state, dispatch] = React.useReducer(reducer, initialState)
+  const db = useDatabase()
+
+  React.useEffect(() => {
+    if (db && Boolean(Object.keys(db).length > 0)) {
+      const collection = db.getCollection('claims')
+      if (collection) {
+        const results = collection.chain().data()
+        dispatch({ type: ActionKind.Initialized, payload: results })
+      } else {
+        const message = 'No claims found in the database.'
+        console.warn(message)
+        dispatch({ type: ActionKind.Error, payload: message })
+      }
+    }
+  }, [db])
+
   return (
     <Box direction="row" fill flex>
       <TopSidebar />
@@ -24,7 +81,7 @@ const Claims: React.FC = () => {
               </Text>
             </Box>
           </Button>
-          <ClaimsDataTable />
+          <ClaimsDataTable claims={state.claims} />
         </Box>
       </Main>
     </Box>

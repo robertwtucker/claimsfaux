@@ -149,20 +149,22 @@ const ClaimData: React.FC = () => {
   ]
 
   React.useEffect(() => {
-    const claims = db.getCollection('claims')
-    const claim = claims.findOne({ 'Claim.Number': { $eq: id } })
-    if (claim) {
-      dispatch({
-        type: ActionKind.Initialized,
-        payload: getFormDataFromClaim(claim),
-      })
-    } else {
-      const message = `Claim '${id}' was not found in the database.`
-      console.error(message)
-      dispatch({
-        type: ActionKind.Error,
-        payload: message,
-      })
+    if (db && Boolean(Object.keys(db).length > 0)) {
+      const claims = db.getCollection('claims')
+      const claim = claims.findOne({ 'Claim.Number': { $eq: id } })
+      if (claim) {
+        dispatch({
+          type: ActionKind.Initialized,
+          payload: getFormDataFromClaim(claim),
+        })
+      } else {
+        const message = `Claim '${id}' was not found in the database.`
+        console.error(message)
+        dispatch({
+          type: ActionKind.Error,
+          payload: message,
+        })
+      }
     }
   }, [db, id])
 
@@ -184,30 +186,33 @@ const ClaimData: React.FC = () => {
   }
 
   const handleSubmit = (form: IDCFormData) => {
-    const claims = db.getCollection('claims')
-    if (claims) {
-      const claim = claims.findOne({ 'Claim.Number': { $eq: id } })
-      if (claim) {
-        claim.Gender = state.dcFormData.Gender
-        claim.FirstName = state.dcFormData.Name
-        claim.LastName = state.dcFormData.Surname
-        claim.City = state.dcFormData.City
-        claim.State = state.dcFormData.State
-        claim.Zip = state.dcFormData.Zip
-        claim.Claim.Number = state.dcFormData.ClaimID
-        claim.Claim.AutoInsurance.Mileage = state.dcFormData.Mileage
-        claim.Claim.VehicleActualCashValue = state.dcFormData.EstMarketValue
-        claim.Policy.CoverageDeductible = state.dcFormData.Deduction
-        claim.Salutation = state.dcFormData.AddressSalutation
-        claim.Claim.DateOfLoss = state.dcFormData.IncidentDate
+    if (db && Boolean(Object.keys(db)[0])) {
+      const claims = db.getCollection('claims')
+      if (claims) {
+        const claim = claims.findOne({ 'Claim.Number': { $eq: id } })
+        if (claim) {
+          claim.Gender = state.dcFormData.Gender
+          claim.FirstName = state.dcFormData.Name
+          claim.LastName = state.dcFormData.Surname
+          claim.City = state.dcFormData.City
+          claim.State = state.dcFormData.State
+          claim.Zip = state.dcFormData.Zip
+          claim.Claim.Number = state.dcFormData.ClaimID
+          claim.Claim.AutoInsurance.Mileage = state.dcFormData.Mileage
+          claim.Claim.VehicleActualCashValue = state.dcFormData.EstMarketValue
+          claim.Policy.CoverageDeductible = state.dcFormData.Deduction
+          claim.Salutation = state.dcFormData.AddressSalutation
+          claim.Claim.DateOfLoss = state.dcFormData.IncidentDate
 
-        claims.update(claim)
-        dispatch({
-          type: ActionKind.DataSaved,
-          payload: getFormDataFromClaim(claim),
-        })
-        return
+          claims.update(claim)
+          dispatch({
+            type: ActionKind.DataSaved,
+            payload: getFormDataFromClaim(claim),
+          })
+          return
+        }
       }
+      console.warn('Database reference is invalid (undefined).')
     }
     console.error('Unable to save updates to the database.')
   }
