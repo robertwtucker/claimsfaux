@@ -4,10 +4,10 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { Grommet, Box } from 'grommet'
+import { DatabaseProvider } from '../contexts/DatabaseProvider'
 import Theme from './Theme'
 import NavHeader from './NavHeader'
 import Routes from './Routes'
-import { DatabaseProvider } from '../contexts/DatabaseProvider'
 
 const App: React.FC = () => {
   return (
