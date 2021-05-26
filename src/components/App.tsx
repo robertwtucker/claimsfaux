@@ -4,7 +4,7 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { Grommet, Box } from 'grommet'
-import { DatabaseProvider } from '../contexts/DatabaseProvider'
+import { DatabaseProvider } from '../contexts/DatabaseContext'
 import Theme from './Theme'
 import NavHeader from './NavHeader'
 import Routes from './Routes'

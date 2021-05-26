@@ -17,7 +17,7 @@ import {
 import { Certificate, Home, UserManager } from 'grommet-icons'
 import ClaimContent from '../components/ClaimContent'
 import { ClientsEntity } from '../data/Claims'
-import { useDatabase } from '../contexts/DatabaseProvider'
+import { useDatabase } from '../contexts/DatabaseContext'
 
 export interface IDCFormData {
   IsInteractiveFormValid?: boolean

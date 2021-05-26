@@ -5,7 +5,7 @@ import React from 'react'
 import { Box, Button, Header, Main, Text } from 'grommet'
 import { Add } from 'grommet-icons'
 import TopSidebar from '../components/TopSidebar'
-import { useDatabase } from '../contexts/DatabaseProvider'
+import { useDatabase } from '../contexts/DatabaseContext'
 import ClaimsDataTable from '../components/ClaimsDataTable'
 import { ClientsEntity } from '../data/Claims'
 
