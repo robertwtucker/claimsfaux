@@ -5,16 +5,22 @@ import React from 'react'
 import loki from 'lokijs'
 import { ClaimsData } from '../data/Claims'
 
-interface IDatabaseContext {
-  database: LokiConstructor | undefined
+export interface DatabaseProviderProps {
+  children: React.ReactNode
 }
 
-export const DatabaseContext = React.createContext<IDatabaseContext>({
-  database: undefined,
+export interface DatabaseProviderState {
+  database: LokiConstructor
+}
+
+const defaultDatabase = {} as LokiConstructor
+
+export const DatabaseContext = React.createContext<DatabaseProviderState>({
+  database: defaultDatabase,
 })
 
-export const DatabaseProvider: React.FC = ({ children }) => {
-  const [database, setDatabase] = React.useState({} as LokiConstructor)
+export const DatabaseProvider = (props: DatabaseProviderProps) => {
+  const [database, setDatabase] = React.useState(defaultDatabase)
 
   React.useEffect(() => {
     const db = new loki('app.db')
@@ -32,7 +38,7 @@ export const DatabaseProvider: React.FC = ({ children }) => {
 
   return (
     <DatabaseContext.Provider value={values}>
-      {children}
+      {props.children}
     </DatabaseContext.Provider>
   )
 }
