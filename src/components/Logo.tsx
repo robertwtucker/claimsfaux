@@ -6,7 +6,9 @@ import { useHistory } from 'react-router-dom'
 import { Box, Text } from 'grommet'
 import { Compliance } from 'grommet-icons'
 
-const Logo: React.FC = () => {
+export interface LogoProps {}
+
+export default function Logo(_props: LogoProps) {
   const history = useHistory()
 
   return (
@@ -28,5 +30,3 @@ const Logo: React.FC = () => {
     </Box>
   )
 }
-
-export default Logo

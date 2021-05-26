@@ -7,7 +7,9 @@ import { Box, Menu, Text } from 'grommet'
 import { CircleQuestion, FormDown, Notification, User } from 'grommet-icons'
 import Logo from './Logo'
 
-const NavHeader: React.FC = () => {
+export interface NavHeaderProps {}
+
+export default function NavHeader(_props: NavHeaderProps) {
   const history = useHistory()
 
   return (
@@ -53,5 +55,3 @@ const NavHeader: React.FC = () => {
     </Box>
   )
 }
-
-export default NavHeader

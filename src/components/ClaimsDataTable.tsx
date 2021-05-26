@@ -6,11 +6,11 @@ import { useHistory } from 'react-router-dom'
 import { ColumnConfig, DataTable } from 'grommet'
 import { ClientsEntity } from '../data/Claims'
 
-interface IClaimsDataTable {
+export interface ClaimsDataTableProps {
   claims: ClientsEntity[]
 }
 
-interface IClaimsDataRow {
+export interface ClaimsDataRowType {
   claimNumber: string
   policyNumber: string
   claimant: string
@@ -20,7 +20,7 @@ interface IClaimsDataRow {
   reserves: number
 }
 
-const initialDataRowState: IClaimsDataRow[] = [
+const initialDataRowState: ClaimsDataRowType[] = [
   {
     claimNumber: '',
     policyNumber: '',
@@ -32,49 +32,13 @@ const initialDataRowState: IClaimsDataRow[] = [
   },
 ]
 
-const ClaimsDataTable: React.FC<IClaimsDataTable> = ({ claims }) => {
-  const [data, setData] = React.useState(initialDataRowState)
-  const history = useHistory()
-
-  React.useEffect(() => {
-    if (claims.length > 0) {
-      const list: IClaimsDataRow[] = claims.flatMap((claim) => {
-        return {
-          claimNumber: claim.Claim.Number,
-          policyNumber: claim.Policy.PolicyNumber,
-          claimant: `${claim.FirstName} ${claim.LastName}`,
-          lossDate: claim.Claim.DateOfLoss,
-          claimHandler: `${claim.ClaimsRepresentative.FirstName} ${claim.ClaimsRepresentative.LastName}`,
-          status: claim.ClientID,
-          reserves: Number.parseFloat(claim.Claim.AmountDemanded),
-        }
-      })
-      setData(list)
-    }
-  }, [claims])
-
-  const handleClick = (item: IClaimsDataRow) => {
-    if (item.claimNumber) {
-      history.push(`/claims/${item.claimNumber}`)
-    }
-  }
-
-  return (
-    <DataTable
-      columns={columns}
-      data={data}
-      onClickRow={(event) => handleClick(event.datum)}
-    />
-  )
-}
-
 const amountFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
   minimumFractionDigits: 2,
 })
 
-const columns: ColumnConfig<IClaimsDataRow>[] = [
+const columns: ColumnConfig<ClaimsDataRowType>[] = [
   {
     property: 'claimNumber',
     header: 'Claim Number',
@@ -110,4 +74,39 @@ const columns: ColumnConfig<IClaimsDataRow>[] = [
   },
 ]
 
-export default ClaimsDataTable
+export default function ClaimsDataTable(props: ClaimsDataTableProps) {
+  const { claims } = props
+  const [data, setData] = React.useState(initialDataRowState)
+  const history = useHistory()
+
+  React.useEffect(() => {
+    if (claims.length > 0) {
+      const list: ClaimsDataRowType[] = claims.flatMap((claim) => {
+        return {
+          claimNumber: claim.Claim.Number,
+          policyNumber: claim.Policy.PolicyNumber,
+          claimant: `${claim.FirstName} ${claim.LastName}`,
+          lossDate: claim.Claim.DateOfLoss,
+          claimHandler: `${claim.ClaimsRepresentative.FirstName} ${claim.ClaimsRepresentative.LastName}`,
+          status: claim.ClientID,
+          reserves: Number.parseFloat(claim.Claim.AmountDemanded),
+        }
+      })
+      setData(list)
+    }
+  }, [claims])
+
+  const handleClick = (item: ClaimsDataRowType) => {
+    if (item.claimNumber) {
+      history.push(`/claims/${item.claimNumber}`)
+    }
+  }
+
+  return (
+    <DataTable
+      columns={columns}
+      data={data}
+      onClickRow={(event) => handleClick(event.datum)}
+    />
+  )
+}

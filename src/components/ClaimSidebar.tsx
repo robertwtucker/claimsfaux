@@ -20,11 +20,12 @@ import { Box, Text } from 'grommet'
 //   CALENDAR = 'Calendar',
 // }
 
-interface IClaimSidebarProps {
+export interface ClaimSidebarProps {
   claimId: string
 }
 
-const ClaimSidebar: React.FC<IClaimSidebarProps> = ({ claimId }) => {
+export default function ClaimSidebar(props: ClaimSidebarProps) {
+  const { claimId } = props
   const history = useHistory()
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -76,5 +77,3 @@ const ClaimSidebar: React.FC<IClaimSidebarProps> = ({ claimId }) => {
     </Box>
   )
 }
-
-export default ClaimSidebar

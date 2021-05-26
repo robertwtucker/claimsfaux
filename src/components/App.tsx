@@ -9,7 +9,9 @@ import Theme from './Theme'
 import NavHeader from './NavHeader'
 import Routes from './Routes'
 
-const App: React.FC = () => {
+export interface AppProps {}
+
+export default function App(_props: AppProps) {
   return (
     <BrowserRouter>
       <Grommet theme={Theme}>
@@ -23,5 +25,3 @@ const App: React.FC = () => {
     </BrowserRouter>
   )
 }
-
-export default App

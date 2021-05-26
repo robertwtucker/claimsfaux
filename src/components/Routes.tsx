@@ -8,7 +8,9 @@ import ClaimSummaryPage from '../pages/ClaimSummaryPage'
 import ClaimDataPage from '../pages/ClaimDataPage'
 import SettingsPage from '../pages/SettingsPage'
 
-const Routes: React.FC = () => {
+export interface RoutesProps {}
+
+export default function Routes(_props: RoutesProps) {
   const location = useLocation()
 
   return (
@@ -23,5 +25,3 @@ const Routes: React.FC = () => {
     </Switch>
   )
 }
-
-export default Routes

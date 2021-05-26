@@ -5,7 +5,9 @@ import React, { MouseEvent } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Box, Text } from 'grommet'
 
-const TopSidebar: React.FC = () => {
+export interface TopSidebarProps {}
+
+export default function TopSidebar(_props: TopSidebarProps) {
   const history = useHistory()
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
@@ -51,5 +53,3 @@ const TopSidebar: React.FC = () => {
     </Box>
   )
 }
-
-export default TopSidebar

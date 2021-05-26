@@ -6,12 +6,16 @@ import qs from 'qs'
 import axios from 'axios'
 import { ColumnConfig, DataTable, Text } from 'grommet'
 
-export interface IInteractiveProcessTicketListResponse {
-  items?: IInteractiveProcessTicketListItem[]
+interface ClaimProcessTicketsProps {
+  claimId: string
+}
+
+export interface InteractiveProcessTicketListResponse {
+  items?: InteractiveProcessTicketListItem[]
   totalCount?: number
 }
 
-export interface IInteractiveProcessTicketListItem {
+export interface InteractiveProcessTicketListItem {
   id?: number
   guid?: string
   name?: string
@@ -24,10 +28,10 @@ export interface IInteractiveProcessTicketListItem {
   created?: number
   changed?: number
   moduleType?: string
-  systemVariables?: IInteractiveProcessTicketListItemSystemVariables
+  systemVariables?: InteractiveProcessTicketListItemSystemVariables
 }
 
-export interface IInteractiveProcessTicketListItemSystemVariables {
+export interface InteractiveProcessTicketListItemSystemVariables {
   Multiapprove_Users?: string
   Created_User?: string
   'alternatives ID'?: string
@@ -47,7 +51,7 @@ export interface IInteractiveProcessTicketListItemSystemVariables {
 }
 
 type State = {
-  tickets?: IInteractiveProcessTicketListItem[]
+  tickets?: InteractiveProcessTicketListItem[]
   loading: boolean
   error?: any
 }
@@ -60,7 +64,7 @@ enum ActionKind {
 type Action =
   | {
       type: ActionKind.ApiCallSuccess
-      payload: IInteractiveProcessTicketListItem[]
+      payload: InteractiveProcessTicketListItem[]
     }
   | { type: ActionKind.ApiCallError; payload: string }
 
@@ -87,13 +91,8 @@ const initialState: State = {
   error: undefined,
 }
 
-interface IClaimProcessTicketsProps {
-  claimId: string
-}
-
-const ClaimProcessTickets: React.FC<IClaimProcessTicketsProps> = ({
-  claimId,
-}) => {
+export default function ClaimProcessTickets(props: ClaimProcessTicketsProps) {
+  const { claimId } = props
   const [state, dispatch] = React.useReducer(reducer, initialState)
 
   React.useEffect(() => {
@@ -115,7 +114,7 @@ const ClaimProcessTickets: React.FC<IClaimProcessTicketsProps> = ({
         })
 
         const listResponse =
-          await axios.request<IInteractiveProcessTicketListResponse>({
+          await axios.request<InteractiveProcessTicketListResponse>({
             method: 'GET',
             url: 'https://inspiredemo.sptcloud.com/interactive/api/v1/interactive-process-ticket/list',
             headers: {
@@ -125,7 +124,7 @@ const ClaimProcessTickets: React.FC<IClaimProcessTicketsProps> = ({
 
         // console.log('list', listResponse.data)
         const items = listResponse.data
-          .items as IInteractiveProcessTicketListItem[]
+          .items as InteractiveProcessTicketListItem[]
         const tickets = items.filter(
           (item) => item.contractId && item.contractId === claimId
         )
@@ -146,7 +145,7 @@ const ClaimProcessTickets: React.FC<IClaimProcessTicketsProps> = ({
     }
   }, [state.loading, claimId])
 
-  const handleClick = (item: IInteractiveProcessTicketListItem) => {
+  const handleClick = (item: InteractiveProcessTicketListItem) => {
     if (item && item.guid) {
       const url = `https://inspiredemo.sptcloud.com/interactive/?interactive-process-ticket-id=${item.guid}`
       window.open(url, '_blank', 'noopener')
@@ -171,7 +170,7 @@ const ClaimProcessTickets: React.FC<IClaimProcessTicketsProps> = ({
   )
 }
 
-const columns: ColumnConfig<IInteractiveProcessTicketListItem>[] = [
+const columns: ColumnConfig<InteractiveProcessTicketListItem>[] = [
   {
     property: 'id',
     header: 'ID',
@@ -192,5 +191,3 @@ const columns: ColumnConfig<IInteractiveProcessTicketListItem>[] = [
     align: 'end',
   },
 ]
-
-export default ClaimProcessTickets

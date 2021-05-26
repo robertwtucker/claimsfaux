@@ -5,11 +5,14 @@ import React from 'react'
 import { Box, Main } from 'grommet'
 import ClaimSidebar from '../components/ClaimSidebar'
 
-export interface IClaimContentProps {
+export interface ClaimContentProps {
   claimId: string
+  children: React.ReactNode
 }
 
-const ClaimContent: React.FC<IClaimContentProps> = ({ claimId, children }) => {
+export default function ClaimContent(props: ClaimContentProps) {
+  const { claimId, children } = props
+
   return (
     <Box direction="row" background="light-1" fill flex>
       <ClaimSidebar claimId={claimId} />
@@ -17,5 +20,3 @@ const ClaimContent: React.FC<IClaimContentProps> = ({ claimId, children }) => {
     </Box>
   )
 }
-
-export default ClaimContent
