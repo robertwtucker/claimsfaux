@@ -3,8 +3,8 @@
  */
 import React from 'react'
 
-const Settings: React.FC = () => {
+export interface SettingsPageProps {}
+
+export default function SettingsPage(_props: SettingsPageProps) {
   return <div>Settings</div>
 }
-
-export default Settings

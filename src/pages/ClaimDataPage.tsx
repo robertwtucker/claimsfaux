@@ -19,6 +19,8 @@ import ClaimContent from '../components/ClaimContent'
 import { ClientsEntity } from '../data/Claims'
 import { useDatabase } from '../contexts/DatabaseContext'
 
+export interface ClaimDataPageProps {}
+
 export interface IDCFormData {
   IsInteractiveFormValid?: boolean
   IsInteractiveReadOnly?: boolean
@@ -127,7 +129,7 @@ const initialState: State = {
   isFormDirty: false,
 }
 
-const ClaimData: React.FC = () => {
+export default function ClaimDataPage(_props: ClaimDataPageProps) {
   const { id } = useParams<{ id: string }>()
   const [state, dispatch] = React.useReducer(reducer, initialState)
   const db = useDatabase()
@@ -350,5 +352,3 @@ const ClaimData: React.FC = () => {
     </ClaimContent>
   )
 }
-
-export default ClaimData

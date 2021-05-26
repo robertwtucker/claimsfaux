@@ -9,6 +9,8 @@ import { useDatabase } from '../contexts/DatabaseContext'
 import ClaimsDataTable from '../components/ClaimsDataTable'
 import { ClientsEntity } from '../data/Claims'
 
+export interface ClaimsPageProps {}
+
 type State = {
   claims: ClientsEntity[]
   loading: boolean
@@ -47,7 +49,7 @@ const initialState: State = {
   error: undefined,
 }
 
-const Claims: React.FC = () => {
+export default function ClaimsPage(_props: ClaimsPageProps) {
   const [state, dispatch] = React.useReducer(reducer, initialState)
   const db = useDatabase()
 
@@ -87,5 +89,3 @@ const Claims: React.FC = () => {
     </Box>
   )
 }
-
-export default Claims

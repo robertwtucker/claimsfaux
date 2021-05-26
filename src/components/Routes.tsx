@@ -3,10 +3,10 @@
  */
 import React from 'react'
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom'
-import Claims from '../pages/Claims'
-import ClaimSummary from '../pages/ClaimSummary'
-import ClaimData from '../pages/ClaimData'
-import Settings from '../pages/Settings'
+import ClaimsPage from '../pages/ClaimsPage'
+import ClaimSummaryPage from '../pages/ClaimSummaryPage'
+import ClaimDataPage from '../pages/ClaimDataPage'
+import SettingsPage from '../pages/SettingsPage'
 
 const Routes: React.FC = () => {
   const location = useLocation()
@@ -16,10 +16,10 @@ const Routes: React.FC = () => {
       <Route exact path="/">
         <Redirect to={{ pathname: '/claims', state: { from: location } }} />
       </Route>
-      <Route path="/claims/:id/data" component={ClaimData} />
-      <Route path="/claims/:id" component={ClaimSummary} />
-      <Route path="/claims" component={Claims} />
-      <Route path="/settings" component={Settings} />
+      <Route path="/claims/:id/data" component={ClaimDataPage} />
+      <Route path="/claims/:id" component={ClaimSummaryPage} />
+      <Route path="/claims" component={ClaimsPage} />
+      <Route path="/settings" component={SettingsPage} />
     </Switch>
   )
 }

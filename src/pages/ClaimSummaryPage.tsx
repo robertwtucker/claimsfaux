@@ -3,25 +3,41 @@
  */
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { Box, Card, Header, Meter, Paragraph, Stack, Text } from 'grommet'
+import {
+  Box,
+  Button,
+  Card,
+  Header,
+  Meter,
+  Paragraph,
+  Stack,
+  Text,
+} from 'grommet'
+import { Add } from 'grommet-icons'
 import ClaimContent from '../components/ClaimContent'
 import { ClientsEntity } from '../data/Claims'
 import ClaimProcessTickets from '../components/ClaimProcessTickets'
-import { useDatabase } from '../contexts/DatabaseProvider'
+import { useDatabase } from '../contexts/DatabaseContext'
+import CreateProcessTicket from '../components/CreateProcessTicket'
+
+export interface ClaimSummaryPageProps {}
 
 type State = {
   claimData?: ClientsEntity
   loading: boolean
+  showCreate: boolean
   error?: any
 }
 
 enum ActionKind {
   Initialized = 'INITIALIZED',
+  ShowCreate = 'SHOW_CREATE',
   Error = 'ERROR',
 }
 
 type Action =
   | { type: ActionKind.Initialized; payload: ClientsEntity }
+  | { type: ActionKind.ShowCreate; payload: boolean }
   | { type: ActionKind.Error; payload: string }
 
 const reducer = (state: State, action: Action): State => {
@@ -31,6 +47,11 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         claimData: action.payload,
         loading: false,
+      }
+    case ActionKind.ShowCreate:
+      return {
+        ...state,
+        showCreate: action.payload,
       }
     case ActionKind.Error:
       return {
@@ -44,6 +65,7 @@ const reducer = (state: State, action: Action): State => {
 const initialState: State = {
   claimData: undefined,
   loading: true,
+  showCreate: false,
   error: undefined,
 }
 
@@ -53,7 +75,7 @@ const amountFormatter = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 0,
 })
 
-const ClaimSummary: React.FC = () => {
+export default function ClaimSummaryPage(_props: ClaimSummaryPageProps) {
   const { id } = useParams<{ id: string }>()
   const [state, dispatch] = React.useReducer(reducer, initialState)
   const db = useDatabase()
@@ -77,6 +99,11 @@ const ClaimSummary: React.FC = () => {
       }
     }
   }, [db, id])
+
+  const hideCreate = React.useCallback(
+    () => dispatch({ type: ActionKind.ShowCreate, payload: false }),
+    []
+  )
 
   return (
     <ClaimContent claimId={id}>
@@ -186,10 +213,33 @@ const ClaimSummary: React.FC = () => {
           <Card>
             <Header pad="small" background="brand">
               <Text weight="bold" color="white">
-                Communications in Process
+                My Communications in Process
               </Text>
             </Header>
-            <Box pad="small">
+            <Box align="start" pad="small" gap="small">
+              {state.showCreate && (
+                <CreateProcessTicket
+                  claim={state.claimData!}
+                  isModal={true}
+                  hideCallback={hideCreate}
+                />
+              )}
+              <Button
+                plain
+                primary
+                onClick={(event) => {
+                  event.preventDefault()
+                  event.stopPropagation()
+                  dispatch({ type: ActionKind.ShowCreate, payload: true })
+                }}
+              >
+                <Box direction="row" align="center" pad="xsmall" gap="xsmall">
+                  <Add color="white" />
+                  <Text size="small" color="white">
+                    New Communication
+                  </Text>
+                </Box>
+              </Button>
               <ClaimProcessTickets claimId={id} />
             </Box>
           </Card>
@@ -272,5 +322,3 @@ const ClaimSummary: React.FC = () => {
     </ClaimContent>
   )
 }
-
-export default ClaimSummary
