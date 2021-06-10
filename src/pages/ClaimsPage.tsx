@@ -7,12 +7,12 @@ import { Add } from 'grommet-icons'
 import TopSidebar from '../components/TopSidebar'
 import { useDatabase } from '../contexts/DatabaseContext'
 import ClaimsDataTable from '../components/ClaimsDataTable'
-import { ClientsEntity } from '../data/Claims'
+import { Client } from '../data/Claims'
 
 export interface ClaimsPageProps {}
 
 type State = {
-  claims: ClientsEntity[]
+  claims: Client[]
   loading: boolean
   error?: any
 }
@@ -23,7 +23,7 @@ enum ActionKind {
 }
 
 type Action =
-  | { type: ActionKind.Initialized; payload: ClientsEntity[] }
+  | { type: ActionKind.Initialized; payload: Client[] }
   | { type: ActionKind.Error; payload: string }
 
 const reducer = (state: State, action: Action): State => {
@@ -44,7 +44,7 @@ const reducer = (state: State, action: Action): State => {
 }
 
 const initialState: State = {
-  claims: [] as ClientsEntity[],
+  claims: [] as Client[],
   loading: true,
   error: undefined,
 }

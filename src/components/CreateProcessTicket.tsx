@@ -13,10 +13,10 @@ import {
   Layer,
   Text,
 } from 'grommet'
-import { ClientsEntity } from '../data/Claims'
+import { Client } from '../data/Claims'
 
 export interface CreateProcessTicketProps {
-  claim: ClientsEntity
+  claim: Client
   isModal: boolean
   hideCallback: () => void
 }

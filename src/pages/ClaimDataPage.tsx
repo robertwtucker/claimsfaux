@@ -16,7 +16,7 @@ import {
 } from 'grommet'
 import { Certificate, Home, UserManager } from 'grommet-icons'
 import ClaimContent from '../components/ClaimContent'
-import { ClientsEntity } from '../data/Claims'
+import { Client } from '../data/Claims'
 import { useDatabase } from '../contexts/DatabaseContext'
 
 export interface ClaimDataPageProps {}
@@ -170,7 +170,7 @@ export default function ClaimDataPage(_props: ClaimDataPageProps) {
     }
   }, [db, id])
 
-  const getFormDataFromClaim = (claimData: ClientsEntity) => {
+  const getFormDataFromClaim = (claimData: Client) => {
     return {
       Gender: claimData.Gender,
       Name: claimData.FirstName,

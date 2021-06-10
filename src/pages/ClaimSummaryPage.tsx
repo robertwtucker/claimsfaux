@@ -15,7 +15,7 @@ import {
 } from 'grommet'
 import { Add } from 'grommet-icons'
 import ClaimContent from '../components/ClaimContent'
-import { ClientsEntity } from '../data/Claims'
+import { Client } from '../data/Claims'
 import ClaimProcessTickets from '../components/ClaimProcessTickets'
 import { useDatabase } from '../contexts/DatabaseContext'
 import CreateProcessTicket from '../components/CreateProcessTicket'
@@ -23,7 +23,7 @@ import CreateProcessTicket from '../components/CreateProcessTicket'
 export interface ClaimSummaryPageProps {}
 
 type State = {
-  claimData?: ClientsEntity
+  claimData?: Client
   loading: boolean
   showCreate: boolean
   error?: any
@@ -36,7 +36,7 @@ enum ActionKind {
 }
 
 type Action =
-  | { type: ActionKind.Initialized; payload: ClientsEntity }
+  | { type: ActionKind.Initialized; payload: Client }
   | { type: ActionKind.ShowCreate; payload: boolean }
   | { type: ActionKind.Error; payload: string }
 

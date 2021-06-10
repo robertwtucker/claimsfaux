@@ -4,10 +4,10 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { ColumnConfig, DataTable } from 'grommet'
-import { ClientsEntity } from '../data/Claims'
+import { Client } from '../data/Claims'
 
 export interface ClaimsDataTableProps {
-  claims: ClientsEntity[]
+  claims: Client[]
 }
 
 export interface ClaimsDataRowType {

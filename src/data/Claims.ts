@@ -3,11 +3,20 @@
  */
 import jsonObject from './customer.json'
 
+// To parse this data:
+//
+//   import { Convert, ClaimsDataModel } from "./file";
+//
+//   const claimsDataModel = Convert.toClaimsDataModel(json);
+//
+// These functions will throw an error if the JSON doesn't
+// match the expected interface, even if the JSON is valid.
+
 export interface ClaimsDataModel {
-  Clients?: ClientsEntity[] | null
+  Clients: Client[]
 }
 
-export interface ClientsEntity {
+export interface Client {
   ClientID: string
   MailFrom: string
   TicketAsignee: string
@@ -19,7 +28,7 @@ export interface ClientsEntity {
   Salutation: string
   Language: string
   AddressSalutation: string
-  AddressLines?: AddressLinesEntity[] | null
+  AddressLines: AddressLine[]
   City: string
   Zip: string
   State: string
@@ -59,20 +68,21 @@ export interface ClientsEntity {
   Others: Others
 }
 
-export interface AddressLinesEntity {
+export interface AddressLine {
   AddressLine: string
 }
 
-export interface ClaimsRepresentative {
+export interface Author {
   FirstName: string
+  Midname: string
   LastName: string
-  AddressLines?: AddressLinesEntity[] | null
-  City: string
-  State: string
-  Zip: string
-  PhoneNumber: string
   Email: string
+  PhoneNumber: string
+  PhoneNumberExt: string
   CellNumber: string
+  Job: string
+  Image: string
+  Signature: string
 }
 
 export interface Claim {
@@ -99,10 +109,10 @@ export interface Claim {
   CaseDescription: string
   CaseDateFiled: string
   CaseNumber: string
-  AutoInsurance: AutoInsurance
+  AutoInsurance: ClaimAutoInsurance
 }
 
-export interface AutoInsurance {
+export interface ClaimAutoInsurance {
   PreApprovalDate: string
   InsuredSince: string
   VehicleYear: string
@@ -116,44 +126,23 @@ export interface AutoInsurance {
   NewPremium: string
 }
 
-export interface Author {
+export interface ClaimsRepresentative {
   FirstName: string
-  Midname: string
   LastName: string
-  Email: string
-  PhoneNumber: string
-  PhoneNumberExt: string
-  CellNumber: string
-  Job: string
-  Image: string
-  Signature: string
-}
-
-export interface Party {
-  Data: Data
-}
-
-export interface Data {
-  Name: string
-  Midname: string
-  Surname: string
-  Title: string
-  Company: string
-  AddressLines?: AddressLinesEntity[] | null
+  AddressLines: AddressLine[]
   City: string
-  Zip: string
   State: string
-  Role: string
-  WebSite: string
+  Zip: string
+  PhoneNumber: string
   Email: string
-  ProviderTINnumber: string
+  CellNumber: string
 }
 
 export interface Dependents {
-  Data?: DataEntity[] | null
+  Data: Datum[]
 }
 
-export interface DataEntity {
+export interface Datum {
   Name: string
   Midname: string
   Surname: string
@@ -164,10 +153,86 @@ export interface DataEntity {
 
 export interface MedicalProvider {
   Name: string
-  AddressLines?: AddressLinesEntity[] | null
+  AddressLines: AddressLine[]
   City: string
   Zip: string
   State: string
+}
+
+export interface Others {
+  Key: string
+  Value: string
+}
+
+export interface Party {
+  Data: PartyData
+}
+
+export interface PartyData {
+  Name: string
+  Midname: string
+  Surname: string
+  Title: string
+  Company: string
+  AddressLines: AddressLine[]
+  City: string
+  Zip: string
+  State: string
+  Role: string
+  WebSite: string
+  Email: string
+  ProviderTINnumber: string
+}
+
+export interface Policies {
+  Data: PoliciesData
+}
+
+export interface PoliciesData {
+  PolicyHolder: PolicyHolder
+  AutoInsurance: DataAutoInsurance
+  PolicyNumber: string
+  PolicyEffectiveDate: string
+  PolicyCoverageDescription: string
+  CoverageLimit: string
+  CoverageDeductible: string
+  Company: Company
+  LogoFileName: string
+}
+
+export interface DataAutoInsurance {
+  VehicleYear: string
+  VehicleMake: string
+  VehicleModel: string
+  VIN: string
+  DriversLicense: string
+}
+
+export interface Company {
+  Code: string
+  Name: string
+  AddressLines: AddressLine[]
+  City: string
+  Zip: string
+  State: string
+  PhoneNumber: string
+  Website: string
+}
+
+export interface PolicyHolder {
+  Name: string
+  Midname: string
+  Surname: string
+  AddressLines: AddressLine[]
+  City: string
+  Zip: string
+  State: string
+  Email: string
+  Birthdate: string
+  PhoneNumber: string
+  CellNumber: string
+  SocialSecurityNumber: string
+  Role: string
 }
 
 export interface Policy {
@@ -178,7 +243,7 @@ export interface Policy {
   PolicyCompanyAddressLine1: string
   PolicyCompanyAddressLine2: string
   PolicyCompanyAddressLine3: string
-  PolicyCompanyCode?: PolicyCompanyCodeEntity[] | null
+  PolicyCompanyCode: PolicyCompanyCode[]
   PolicyCompanyName: string
   PolicyCompanyPhoneNumber: string
   PolicyCompanyState: string
@@ -206,1329 +271,504 @@ export interface Policy {
   VehicleYear: string
 }
 
-export interface PolicyCompanyCodeEntity {
+export interface PolicyCompanyCode {
   PCData: string
 }
 
-export interface Policies {
-  Data: Data1
-}
-
-export interface Data1 {
-  PolicyHolder: PolicyHolder
-  AutoInsurance: AutoInsurance1
-  PolicyNumber: string
-  PolicyEffectiveDate: string
-  PolicyCoverageDescription: string
-  CoverageLimit: string
-  CoverageDeductible: string
-  Company: Company
-  LogoFileName: string
-}
-
-export interface PolicyHolder {
-  Name: string
-  Midname: string
-  Surname: string
-  AddressLines?: AddressLinesEntity[] | null
-  City: string
-  Zip: string
-  State: string
-  Email: string
-  Birthdate: string
-  PhoneNumber: string
-  CellNumber: string
-  SocialSecurityNumber: string
-  Role: string
-}
-
-export interface AutoInsurance1 {
-  VehicleYear: string
-  VehicleMake: string
-  VehicleModel: string
-  VIN: string
-  DriversLicense: string
-}
-
-export interface Company {
-  Code: string
-  Name: string
-  AddressLines?: AddressLinesEntity[] | null
-  City: string
-  Zip: string
-  State: string
-  PhoneNumber: string
-  Website: string
-}
-
-export interface Others {
-  Key: string
-  Value: string
-}
-
-// Stores the currently-being-typechecked object for error messages.
-let obj: any = null
-export class ClaimsDataProxy {
-  public readonly Clients: ClientsEntityProxy[] | null
-  public static Parse(d: string): ClaimsDataProxy {
-    return ClaimsDataProxy.Create(JSON.parse(d))
+// Converts JSON strings to/from your types
+// and asserts the results of JSON.parse at runtime
+export class Convert {
+  public static toClaimsDataModel(json: string): ClaimsDataModel {
+    return cast(JSON.parse(json), r('ClaimsDataModel'))
   }
-  public static Create(d: any, field: string = 'root'): ClaimsDataProxy {
-    if (!field) {
-      obj = d
-      field = 'root'
-    }
-    if (d === null || d === undefined) {
-      throwNull2NonNull(field, d)
-    } else if (typeof d !== 'object') {
-      throwNotObject(field, d, false)
-    } else if (Array.isArray(d)) {
-      throwIsArray(field, d, false)
-    }
-    checkArray(d.Clients, field + '.Clients')
-    if (d.Clients) {
-      for (let i = 0; i < d.Clients.length; i++) {
-        d.Clients[i] = ClientsEntityProxy.Create(
-          d.Clients[i],
-          field + '.Clients[' + i + ']'
-        )
-      }
-    }
-    if (d.Clients === undefined) {
-      d.Clients = null
-    }
-    return new ClaimsDataProxy(d)
-  }
-  private constructor(d: any) {
-    this.Clients = d.Clients
+
+  public static claimsDataModelToJson(value: ClaimsDataModel): string {
+    return JSON.stringify(uncast(value, r('ClaimsDataModel')), null, 2)
   }
 }
 
-export class ClientsEntityProxy {
-  public readonly ClientID: string
-  public readonly MailFrom: string
-  public readonly TicketAsignee: string
-  public readonly FirstName: string
-  public readonly Midname: string
-  public readonly LastName: string
-  public readonly Gender: string
-  public readonly Title: string
-  public readonly Salutation: string
-  public readonly Language: string
-  public readonly AddressSalutation: string
-  public readonly AddressLines: AddressLinesEntityProxy[] | null
-  public readonly City: string
-  public readonly Zip: string
-  public readonly State: string
-  public readonly StateAbbreviation: string
-  public readonly Country: string
-  public readonly Email: string
-  public readonly PolicyType: string
-  public readonly Role: string
-  public readonly Age: string
-  public readonly DateOfBirth: string
-  public readonly SocialSecurityNumber: string
-  public readonly PhoneNumber: string
-  public readonly CellNumber: string
-  public readonly DriversLicenseNumber: string
-  public readonly FraudIndicator: string
-  public readonly ChannelPreference: string
-  public readonly Subject: string
-  public readonly FollowUpDate: string
-  public readonly Template: string
-  public readonly FreeFormVariable1: string
-  public readonly FreeFormVariable2: string
-  public readonly FreeFormVariable3: string
-  public readonly FreeFormVariable4: string
-  public readonly FreeFormVariable5: string
-  public readonly FreeFormVariable6: string
-  public readonly FreeFormVariable7: string
-  public readonly FreeFormVariable8: string
-  public readonly FreeFormVariable9: string
-  public readonly FreeFormVariable10: string
-  public readonly ClaimsRepresentative: ClaimsRepresentativeProxy
-  public readonly Claim: ClaimProxy
-  public readonly Author: AuthorProxy
-  public readonly Party: PartyProxy
-  public readonly Dependents: DependentsProxy
-  public readonly Policy: PolicyProxy
-  public readonly Policies: PoliciesProxy
-  public readonly Others: OthersProxy
-  public static Parse(d: string): ClientsEntityProxy {
-    return ClientsEntityProxy.Create(JSON.parse(d))
-  }
-  public static Create(d: any, field: string = 'root'): ClientsEntityProxy {
-    if (!field) {
-      obj = d
-      field = 'root'
-    }
-    if (d === null || d === undefined) {
-      throwNull2NonNull(field, d)
-    } else if (typeof d !== 'object') {
-      throwNotObject(field, d, false)
-    } else if (Array.isArray(d)) {
-      throwIsArray(field, d, false)
-    }
-    checkString(d.ClientID, false, field + '.ClientID')
-    checkString(d.MailFrom, false, field + '.MailFrom')
-    checkString(d.TicketAsignee, false, field + '.TicketAsignee')
-    checkString(d.FirstName, false, field + '.FirstName')
-    checkString(d.Midname, false, field + '.Midname')
-    checkString(d.LastName, false, field + '.LastName')
-    checkString(d.Gender, false, field + '.Gender')
-    checkString(d.Title, false, field + '.Title')
-    checkString(d.Salutation, false, field + '.Salutation')
-    checkString(d.Language, false, field + '.Language')
-    checkString(d.AddressSalutation, false, field + '.AddressSalutation')
-    checkArray(d.AddressLines, field + '.AddressLines')
-    if (d.AddressLines) {
-      for (let i = 0; i < d.AddressLines.length; i++) {
-        d.AddressLines[i] = AddressLinesEntityProxy.Create(
-          d.AddressLines[i],
-          field + '.AddressLines[' + i + ']'
-        )
-      }
-    }
-    if (d.AddressLines === undefined) {
-      d.AddressLines = null
-    }
-    checkString(d.City, false, field + '.City')
-    checkString(d.Zip, false, field + '.Zip')
-    checkString(d.State, false, field + '.State')
-    checkString(d.StateAbbreviation, false, field + '.StateAbbreviation')
-    checkString(d.Country, false, field + '.Country')
-    checkString(d.Email, false, field + '.Email')
-    checkString(d.PolicyType, false, field + '.PolicyType')
-    checkString(d.Role, false, field + '.Role')
-    checkString(d.Age, false, field + '.Age')
-    checkString(d.DateOfBirth, false, field + '.DateOfBirth')
-    checkString(d.SocialSecurityNumber, false, field + '.SocialSecurityNumber')
-    checkString(d.PhoneNumber, false, field + '.PhoneNumber')
-    checkString(d.CellNumber, false, field + '.CellNumber')
-    checkString(d.DriversLicenseNumber, false, field + '.DriversLicenseNumber')
-    checkString(d.FraudIndicator, false, field + '.FraudIndicator')
-    checkString(d.ChannelPreference, false, field + '.ChannelPreference')
-    checkString(d.Subject, false, field + '.Subject')
-    checkString(d.FollowUpDate, false, field + '.FollowUpDate')
-    checkString(d.Template, false, field + '.Template')
-    checkString(d.FreeFormVariable1, false, field + '.FreeFormVariable1')
-    checkString(d.FreeFormVariable2, false, field + '.FreeFormVariable2')
-    checkString(d.FreeFormVariable3, false, field + '.FreeFormVariable3')
-    checkString(d.FreeFormVariable4, false, field + '.FreeFormVariable4')
-    checkString(d.FreeFormVariable5, false, field + '.FreeFormVariable5')
-    checkString(d.FreeFormVariable6, false, field + '.FreeFormVariable6')
-    checkString(d.FreeFormVariable7, false, field + '.FreeFormVariable7')
-    checkString(d.FreeFormVariable8, false, field + '.FreeFormVariable8')
-    checkString(d.FreeFormVariable9, false, field + '.FreeFormVariable9')
-    checkString(d.FreeFormVariable10, false, field + '.FreeFormVariable10')
-    d.ClaimsRepresentative = ClaimsRepresentativeProxy.Create(
-      d.ClaimsRepresentative,
-      field + '.ClaimsRepresentative'
+function invalidValue(typ: any, val: any, key: any = ''): never {
+  if (key) {
+    throw Error(
+      `Invalid value for key "${key}". Expected type ${JSON.stringify(
+        typ
+      )} but got ${JSON.stringify(val)}`
     )
-    d.Claim = ClaimProxy.Create(d.Claim, field + '.Claim')
-    d.Author = AuthorProxy.Create(d.Author, field + '.Author')
-    d.Party = PartyProxy.Create(d.Party, field + '.Party')
-    d.Dependents = DependentsProxy.Create(d.Dependents, field + '.Dependents')
-    d.Policy = PolicyProxy.Create(d.Policy, field + '.Policy')
-    d.Policies = PoliciesProxy.Create(d.Policies, field + '.Policies')
-    d.Others = OthersProxy.Create(d.Others, field + '.Others')
-    return new ClientsEntityProxy(d)
   }
-  private constructor(d: any) {
-    this.ClientID = d.ClientID
-    this.MailFrom = d.MailFrom
-    this.TicketAsignee = d.TicketAsignee
-    this.FirstName = d.FirstName
-    this.Midname = d.Midname
-    this.LastName = d.LastName
-    this.Gender = d.Gender
-    this.Title = d.Title
-    this.Salutation = d.Salutation
-    this.Language = d.Language
-    this.AddressSalutation = d.AddressSalutation
-    this.AddressLines = d.AddressLines
-    this.City = d.City
-    this.Zip = d.Zip
-    this.State = d.State
-    this.StateAbbreviation = d.StateAbbreviation
-    this.Country = d.Country
-    this.Email = d.Email
-    this.PolicyType = d.PolicyType
-    this.Role = d.Role
-    this.Age = d.Age
-    this.DateOfBirth = d.DateOfBirth
-    this.SocialSecurityNumber = d.SocialSecurityNumber
-    this.PhoneNumber = d.PhoneNumber
-    this.CellNumber = d.CellNumber
-    this.DriversLicenseNumber = d.DriversLicenseNumber
-    this.FraudIndicator = d.FraudIndicator
-    this.ChannelPreference = d.ChannelPreference
-    this.Subject = d.Subject
-    this.FollowUpDate = d.FollowUpDate
-    this.Template = d.Template
-    this.FreeFormVariable1 = d.FreeFormVariable1
-    this.FreeFormVariable2 = d.FreeFormVariable2
-    this.FreeFormVariable3 = d.FreeFormVariable3
-    this.FreeFormVariable4 = d.FreeFormVariable4
-    this.FreeFormVariable5 = d.FreeFormVariable5
-    this.FreeFormVariable6 = d.FreeFormVariable6
-    this.FreeFormVariable7 = d.FreeFormVariable7
-    this.FreeFormVariable8 = d.FreeFormVariable8
-    this.FreeFormVariable9 = d.FreeFormVariable9
-    this.FreeFormVariable10 = d.FreeFormVariable10
-    this.ClaimsRepresentative = d.ClaimsRepresentative
-    this.Claim = d.Claim
-    this.Author = d.Author
-    this.Party = d.Party
-    this.Dependents = d.Dependents
-    this.Policy = d.Policy
-    this.Policies = d.Policies
-    this.Others = d.Others
-  }
-}
-
-export class AddressLinesEntityProxy {
-  public readonly AddressLine: string
-  public static Parse(d: string): AddressLinesEntityProxy {
-    return AddressLinesEntityProxy.Create(JSON.parse(d))
-  }
-  public static Create(
-    d: any,
-    field: string = 'root'
-  ): AddressLinesEntityProxy {
-    if (!field) {
-      obj = d
-      field = 'root'
-    }
-    if (d === null || d === undefined) {
-      throwNull2NonNull(field, d)
-    } else if (typeof d !== 'object') {
-      throwNotObject(field, d, false)
-    } else if (Array.isArray(d)) {
-      throwIsArray(field, d, false)
-    }
-    checkString(d.AddressLine, false, field + '.AddressLine')
-    return new AddressLinesEntityProxy(d)
-  }
-  private constructor(d: any) {
-    this.AddressLine = d.AddressLine
-  }
-}
-
-export class ClaimsRepresentativeProxy {
-  public readonly FirstName: string
-  public readonly LastName: string
-  public readonly AddressLines: AddressLinesEntityProxy[] | null
-  public readonly City: string
-  public readonly State: string
-  public readonly Zip: string
-  public readonly PhoneNumber: string
-  public readonly Email: string
-  public readonly CellNumber: string
-  public static Parse(d: string): ClaimsRepresentativeProxy {
-    return ClaimsRepresentativeProxy.Create(JSON.parse(d))
-  }
-  public static Create(
-    d: any,
-    field: string = 'root'
-  ): ClaimsRepresentativeProxy {
-    if (!field) {
-      obj = d
-      field = 'root'
-    }
-    if (d === null || d === undefined) {
-      throwNull2NonNull(field, d)
-    } else if (typeof d !== 'object') {
-      throwNotObject(field, d, false)
-    } else if (Array.isArray(d)) {
-      throwIsArray(field, d, false)
-    }
-    checkString(d.FirstName, false, field + '.FirstName')
-    checkString(d.LastName, false, field + '.LastName')
-    checkArray(d.AddressLines, field + '.AddressLines')
-    if (d.AddressLines) {
-      for (let i = 0; i < d.AddressLines.length; i++) {
-        d.AddressLines[i] = AddressLinesEntityProxy.Create(
-          d.AddressLines[i],
-          field + '.AddressLines[' + i + ']'
-        )
-      }
-    }
-    if (d.AddressLines === undefined) {
-      d.AddressLines = null
-    }
-    checkString(d.City, false, field + '.City')
-    checkString(d.State, false, field + '.State')
-    checkString(d.Zip, false, field + '.Zip')
-    checkString(d.PhoneNumber, false, field + '.PhoneNumber')
-    checkString(d.Email, false, field + '.Email')
-    checkString(d.CellNumber, false, field + '.CellNumber')
-    return new ClaimsRepresentativeProxy(d)
-  }
-  private constructor(d: any) {
-    this.FirstName = d.FirstName
-    this.LastName = d.LastName
-    this.AddressLines = d.AddressLines
-    this.City = d.City
-    this.State = d.State
-    this.Zip = d.Zip
-    this.PhoneNumber = d.PhoneNumber
-    this.Email = d.Email
-    this.CellNumber = d.CellNumber
-  }
-}
-
-export class ClaimProxy {
-  public readonly Number: string
-  public readonly Date: string
-  public readonly DateOfLoss: string
-  public readonly TimeOfLoss: string
-  public readonly AmountDemanded: string
-  public readonly Location: string
-  public readonly State: string
-  public readonly LossDescription: string
-  public readonly InjuryDescription: string
-  public readonly SpouseName: string
-  public readonly NumberOfDependents: string
-  public readonly DeathDate: string
-  public readonly SubrogationAmount: string
-  public readonly SalvageAmount: string
-  public readonly PaidClaimAmount: string
-  public readonly VehicleActualCashValue: string
-  public readonly ArbitrationDate: string
-  public readonly SettlementAmount: string
-  public readonly LetterReceivedDate: string
-  public readonly ClaimantCompanyName: string
-  public readonly CaseDescription: string
-  public readonly CaseDateFiled: string
-  public readonly CaseNumber: string
-  public readonly AutoInsurance: AutoInsuranceProxy
-  public static Parse(d: string): ClaimProxy {
-    return ClaimProxy.Create(JSON.parse(d))
-  }
-  public static Create(d: any, field: string = 'root'): ClaimProxy {
-    if (!field) {
-      obj = d
-      field = 'root'
-    }
-    if (d === null || d === undefined) {
-      throwNull2NonNull(field, d)
-    } else if (typeof d !== 'object') {
-      throwNotObject(field, d, false)
-    } else if (Array.isArray(d)) {
-      throwIsArray(field, d, false)
-    }
-    checkString(d.Number, false, field + '.Number')
-    checkString(d.Date, false, field + '.Date')
-    checkString(d.DateOfLoss, false, field + '.DateOfLoss')
-    checkString(d.TimeOfLoss, false, field + '.TimeOfLoss')
-    checkString(d.AmountDemanded, false, field + '.AmountDemanded')
-    checkString(d.Location, false, field + '.Location')
-    checkString(d.State, false, field + '.State')
-    checkString(d.LossDescription, false, field + '.LossDescription')
-    checkString(d.InjuryDescription, false, field + '.InjuryDescription')
-    checkString(d.SpouseName, false, field + '.SpouseName')
-    checkString(d.NumberOfDependents, false, field + '.NumberOfDependents')
-    checkString(d.DeathDate, false, field + '.DeathDate')
-    checkString(d.SubrogationAmount, false, field + '.SubrogationAmount')
-    checkString(d.SalvageAmount, false, field + '.SalvageAmount')
-    checkString(d.PaidClaimAmount, false, field + '.PaidClaimAmount')
-    checkString(
-      d.VehicleActualCashValue,
-      false,
-      field + '.VehicleActualCashValue'
-    )
-    checkString(d.ArbitrationDate, false, field + '.ArbitrationDate')
-    checkString(d.SettlementAmount, false, field + '.SettlementAmount')
-    checkString(d.LetterReceivedDate, false, field + '.LetterReceivedDate')
-    checkString(d.ClaimantCompanyName, false, field + '.ClaimantCompanyName')
-    checkString(d.CaseDescription, false, field + '.CaseDescription')
-    checkString(d.CaseDateFiled, false, field + '.CaseDateFiled')
-    checkString(d.CaseNumber, false, field + '.CaseNumber')
-    d.AutoInsurance = AutoInsuranceProxy.Create(
-      d.AutoInsurance,
-      field + '.AutoInsurance'
-    )
-    return new ClaimProxy(d)
-  }
-  private constructor(d: any) {
-    this.Number = d.Number
-    this.Date = d.Date
-    this.DateOfLoss = d.DateOfLoss
-    this.TimeOfLoss = d.TimeOfLoss
-    this.AmountDemanded = d.AmountDemanded
-    this.Location = d.Location
-    this.State = d.State
-    this.LossDescription = d.LossDescription
-    this.InjuryDescription = d.InjuryDescription
-    this.SpouseName = d.SpouseName
-    this.NumberOfDependents = d.NumberOfDependents
-    this.DeathDate = d.DeathDate
-    this.SubrogationAmount = d.SubrogationAmount
-    this.SalvageAmount = d.SalvageAmount
-    this.PaidClaimAmount = d.PaidClaimAmount
-    this.VehicleActualCashValue = d.VehicleActualCashValue
-    this.ArbitrationDate = d.ArbitrationDate
-    this.SettlementAmount = d.SettlementAmount
-    this.LetterReceivedDate = d.LetterReceivedDate
-    this.ClaimantCompanyName = d.ClaimantCompanyName
-    this.CaseDescription = d.CaseDescription
-    this.CaseDateFiled = d.CaseDateFiled
-    this.CaseNumber = d.CaseNumber
-    this.AutoInsurance = d.AutoInsurance
-  }
-}
-
-export class AutoInsuranceProxy {
-  public readonly PreApprovalDate: string
-  public readonly InsuredSince: string
-  public readonly VehicleYear: string
-  public readonly VehicleMake: string
-  public readonly VehicleModel: string
-  public readonly VIN: string
-  public readonly VehicleDamage: string
-  public readonly VehicleLicenseNumber: string
-  public readonly Mileage: string
-  public readonly PreviousPremium: string
-  public readonly NewPremium: string
-  public static Parse(d: string): AutoInsuranceProxy {
-    return AutoInsuranceProxy.Create(JSON.parse(d))
-  }
-  public static Create(d: any, field: string = 'root'): AutoInsuranceProxy {
-    if (!field) {
-      obj = d
-      field = 'root'
-    }
-    if (d === null || d === undefined) {
-      throwNull2NonNull(field, d)
-    } else if (typeof d !== 'object') {
-      throwNotObject(field, d, false)
-    } else if (Array.isArray(d)) {
-      throwIsArray(field, d, false)
-    }
-    checkString(d.PreApprovalDate, false, field + '.PreApprovalDate')
-    checkString(d.InsuredSince, false, field + '.InsuredSince')
-    checkString(d.VehicleYear, false, field + '.VehicleYear')
-    checkString(d.VehicleMake, false, field + '.VehicleMake')
-    checkString(d.VehicleModel, false, field + '.VehicleModel')
-    checkString(d.VIN, false, field + '.VIN')
-    checkString(d.VehicleDamage, false, field + '.VehicleDamage')
-    checkString(d.VehicleLicenseNumber, false, field + '.VehicleLicenseNumber')
-    checkString(d.Mileage, false, field + '.Mileage')
-    checkString(d.PreviousPremium, false, field + '.PreviousPremium')
-    checkString(d.NewPremium, false, field + '.NewPremium')
-    return new AutoInsuranceProxy(d)
-  }
-  private constructor(d: any) {
-    this.PreApprovalDate = d.PreApprovalDate
-    this.InsuredSince = d.InsuredSince
-    this.VehicleYear = d.VehicleYear
-    this.VehicleMake = d.VehicleMake
-    this.VehicleModel = d.VehicleModel
-    this.VIN = d.VIN
-    this.VehicleDamage = d.VehicleDamage
-    this.VehicleLicenseNumber = d.VehicleLicenseNumber
-    this.Mileage = d.Mileage
-    this.PreviousPremium = d.PreviousPremium
-    this.NewPremium = d.NewPremium
-  }
-}
-
-export class AuthorProxy {
-  public readonly FirstName: string
-  public readonly Midname: string
-  public readonly LastName: string
-  public readonly Email: string
-  public readonly PhoneNumber: string
-  public readonly PhoneNumberExt: string
-  public readonly CellNumber: string
-  public readonly Job: string
-  public readonly Image: string
-  public readonly Signature: string
-  public static Parse(d: string): AuthorProxy {
-    return AuthorProxy.Create(JSON.parse(d))
-  }
-  public static Create(d: any, field: string = 'root'): AuthorProxy {
-    if (!field) {
-      obj = d
-      field = 'root'
-    }
-    if (d === null || d === undefined) {
-      throwNull2NonNull(field, d)
-    } else if (typeof d !== 'object') {
-      throwNotObject(field, d, false)
-    } else if (Array.isArray(d)) {
-      throwIsArray(field, d, false)
-    }
-    checkString(d.FirstName, false, field + '.FirstName')
-    checkString(d.Midname, false, field + '.Midname')
-    checkString(d.LastName, false, field + '.LastName')
-    checkString(d.Email, false, field + '.Email')
-    checkString(d.PhoneNumber, false, field + '.PhoneNumber')
-    checkString(d.PhoneNumberExt, false, field + '.PhoneNumberExt')
-    checkString(d.CellNumber, false, field + '.CellNumber')
-    checkString(d.Job, false, field + '.Job')
-    checkString(d.Image, false, field + '.Image')
-    checkString(d.Signature, false, field + '.Signature')
-    return new AuthorProxy(d)
-  }
-  private constructor(d: any) {
-    this.FirstName = d.FirstName
-    this.Midname = d.Midname
-    this.LastName = d.LastName
-    this.Email = d.Email
-    this.PhoneNumber = d.PhoneNumber
-    this.PhoneNumberExt = d.PhoneNumberExt
-    this.CellNumber = d.CellNumber
-    this.Job = d.Job
-    this.Image = d.Image
-    this.Signature = d.Signature
-  }
-}
-
-export class PartyProxy {
-  public readonly Data: DataProxy
-  public static Parse(d: string): PartyProxy {
-    return PartyProxy.Create(JSON.parse(d))
-  }
-  public static Create(d: any, field: string = 'root'): PartyProxy {
-    if (!field) {
-      obj = d
-      field = 'root'
-    }
-    if (d === null || d === undefined) {
-      throwNull2NonNull(field, d)
-    } else if (typeof d !== 'object') {
-      throwNotObject(field, d, false)
-    } else if (Array.isArray(d)) {
-      throwIsArray(field, d, false)
-    }
-    d.Data = DataProxy.Create(d.Data, field + '.Data')
-    return new PartyProxy(d)
-  }
-  private constructor(d: any) {
-    this.Data = d.Data
-  }
-}
-
-export class DataProxy {
-  public readonly Name: string
-  public readonly Midname: string
-  public readonly Surname: string
-  public readonly Title: string
-  public readonly Company: string
-  public readonly AddressLines: AddressLinesEntityProxy[] | null
-  public readonly City: string
-  public readonly Zip: string
-  public readonly State: string
-  public readonly Role: string
-  public readonly WebSite: string
-  public readonly Email: string
-  public readonly ProviderTINnumber: string
-  public static Parse(d: string): DataProxy {
-    return DataProxy.Create(JSON.parse(d))
-  }
-  public static Create(d: any, field: string = 'root'): DataProxy {
-    if (!field) {
-      obj = d
-      field = 'root'
-    }
-    if (d === null || d === undefined) {
-      throwNull2NonNull(field, d)
-    } else if (typeof d !== 'object') {
-      throwNotObject(field, d, false)
-    } else if (Array.isArray(d)) {
-      throwIsArray(field, d, false)
-    }
-    checkString(d.Name, false, field + '.Name')
-    checkString(d.Midname, false, field + '.Midname')
-    checkString(d.Surname, false, field + '.Surname')
-    checkString(d.Title, false, field + '.Title')
-    checkString(d.Company, false, field + '.Company')
-    checkArray(d.AddressLines, field + '.AddressLines')
-    if (d.AddressLines) {
-      for (let i = 0; i < d.AddressLines.length; i++) {
-        d.AddressLines[i] = AddressLinesEntityProxy.Create(
-          d.AddressLines[i],
-          field + '.AddressLines[' + i + ']'
-        )
-      }
-    }
-    if (d.AddressLines === undefined) {
-      d.AddressLines = null
-    }
-    checkString(d.City, false, field + '.City')
-    checkString(d.Zip, false, field + '.Zip')
-    checkString(d.State, false, field + '.State')
-    checkString(d.Role, false, field + '.Role')
-    checkString(d.WebSite, false, field + '.WebSite')
-    checkString(d.Email, false, field + '.Email')
-    checkString(d.ProviderTINnumber, false, field + '.ProviderTINnumber')
-    return new DataProxy(d)
-  }
-  private constructor(d: any) {
-    this.Name = d.Name
-    this.Midname = d.Midname
-    this.Surname = d.Surname
-    this.Title = d.Title
-    this.Company = d.Company
-    this.AddressLines = d.AddressLines
-    this.City = d.City
-    this.Zip = d.Zip
-    this.State = d.State
-    this.Role = d.Role
-    this.WebSite = d.WebSite
-    this.Email = d.Email
-    this.ProviderTINnumber = d.ProviderTINnumber
-  }
-}
-
-export class DependentsProxy {
-  public readonly Data: DataEntityProxy[] | null
-  public static Parse(d: string): DependentsProxy {
-    return DependentsProxy.Create(JSON.parse(d))
-  }
-  public static Create(d: any, field: string = 'root'): DependentsProxy {
-    if (!field) {
-      obj = d
-      field = 'root'
-    }
-    if (d === null || d === undefined) {
-      throwNull2NonNull(field, d)
-    } else if (typeof d !== 'object') {
-      throwNotObject(field, d, false)
-    } else if (Array.isArray(d)) {
-      throwIsArray(field, d, false)
-    }
-    checkArray(d.Data, field + '.Data')
-    if (d.Data) {
-      for (let i = 0; i < d.Data.length; i++) {
-        d.Data[i] = DataEntityProxy.Create(
-          d.Data[i],
-          field + '.Data[' + i + ']'
-        )
-      }
-    }
-    if (d.Data === undefined) {
-      d.Data = null
-    }
-    return new DependentsProxy(d)
-  }
-  private constructor(d: any) {
-    this.Data = d.Data
-  }
-}
-
-export class DataEntityProxy {
-  public readonly Name: string
-  public readonly Midname: string
-  public readonly Surname: string
-  public readonly Gender: string
-  public readonly Email: string
-  public readonly MedicalProvider: MedicalProviderProxy
-  public static Parse(d: string): DataEntityProxy {
-    return DataEntityProxy.Create(JSON.parse(d))
-  }
-  public static Create(d: any, field: string = 'root'): DataEntityProxy {
-    if (!field) {
-      obj = d
-      field = 'root'
-    }
-    if (d === null || d === undefined) {
-      throwNull2NonNull(field, d)
-    } else if (typeof d !== 'object') {
-      throwNotObject(field, d, false)
-    } else if (Array.isArray(d)) {
-      throwIsArray(field, d, false)
-    }
-    checkString(d.Name, false, field + '.Name')
-    checkString(d.Midname, false, field + '.Midname')
-    checkString(d.Surname, false, field + '.Surname')
-    checkString(d.Gender, false, field + '.Gender')
-    checkString(d.Email, false, field + '.Email')
-    d.MedicalProvider = MedicalProviderProxy.Create(
-      d.MedicalProvider,
-      field + '.MedicalProvider'
-    )
-    return new DataEntityProxy(d)
-  }
-  private constructor(d: any) {
-    this.Name = d.Name
-    this.Midname = d.Midname
-    this.Surname = d.Surname
-    this.Gender = d.Gender
-    this.Email = d.Email
-    this.MedicalProvider = d.MedicalProvider
-  }
-}
-
-export class MedicalProviderProxy {
-  public readonly Name: string
-  public readonly AddressLines: AddressLinesEntityProxy[] | null
-  public readonly City: string
-  public readonly Zip: string
-  public readonly State: string
-  public static Parse(d: string): MedicalProviderProxy {
-    return MedicalProviderProxy.Create(JSON.parse(d))
-  }
-  public static Create(d: any, field: string = 'root'): MedicalProviderProxy {
-    if (!field) {
-      obj = d
-      field = 'root'
-    }
-    if (d === null || d === undefined) {
-      throwNull2NonNull(field, d)
-    } else if (typeof d !== 'object') {
-      throwNotObject(field, d, false)
-    } else if (Array.isArray(d)) {
-      throwIsArray(field, d, false)
-    }
-    checkString(d.Name, false, field + '.Name')
-    checkArray(d.AddressLines, field + '.AddressLines')
-    if (d.AddressLines) {
-      for (let i = 0; i < d.AddressLines.length; i++) {
-        d.AddressLines[i] = AddressLinesEntityProxy.Create(
-          d.AddressLines[i],
-          field + '.AddressLines[' + i + ']'
-        )
-      }
-    }
-    if (d.AddressLines === undefined) {
-      d.AddressLines = null
-    }
-    checkString(d.City, false, field + '.City')
-    checkString(d.Zip, false, field + '.Zip')
-    checkString(d.State, false, field + '.State')
-    return new MedicalProviderProxy(d)
-  }
-  private constructor(d: any) {
-    this.Name = d.Name
-    this.AddressLines = d.AddressLines
-    this.City = d.City
-    this.Zip = d.Zip
-    this.State = d.State
-  }
-}
-
-export class PolicyProxy {
-  public readonly CoverageDeductible: string
-  public readonly CoverageLimit: string
-  public readonly DriversLicense: string
-  public readonly LogoFileName: string
-  public readonly PolicyCompanyAddressLine1: string
-  public readonly PolicyCompanyAddressLine2: string
-  public readonly PolicyCompanyAddressLine3: string
-  public readonly PolicyCompanyCode: PolicyCompanyCodeEntityProxy[] | null
-  public readonly PolicyCompanyName: string
-  public readonly PolicyCompanyPhoneNumber: string
-  public readonly PolicyCompanyState: string
-  public readonly PolicyCompanyWebsite: string
-  public readonly PolicyCompanyZip: string
-  public readonly PolicyCoverageDescription: string
-  public readonly PolicyEffectiveDate: string
-  public readonly PolicyHolderAddressLine1: string
-  public readonly PolicyHolderBirthdate: string
-  public readonly PolicyHolderCellNumber: string
-  public readonly PolicyHolderCity: string
-  public readonly PolicyHolderEmail: string
-  public readonly PolicyHolderMidname: string
-  public readonly PolicyHolderName: string
-  public readonly PolicyHolderPhoneNumber: string
-  public readonly PolicyHolderRole: string
-  public readonly PolicyHolderSocialSecurityNumber: string
-  public readonly PolicyHolderState: string
-  public readonly PolicyHolderSurname: string
-  public readonly PolicyHolderZip: string
-  public readonly PolicyNumber: string
-  public readonly VIN: string
-  public readonly VehicleMake: string
-  public readonly VehicleModel: string
-  public readonly VehicleYear: string
-  public static Parse(d: string): PolicyProxy {
-    return PolicyProxy.Create(JSON.parse(d))
-  }
-  public static Create(d: any, field: string = 'root'): PolicyProxy {
-    if (!field) {
-      obj = d
-      field = 'root'
-    }
-    if (d === null || d === undefined) {
-      throwNull2NonNull(field, d)
-    } else if (typeof d !== 'object') {
-      throwNotObject(field, d, false)
-    } else if (Array.isArray(d)) {
-      throwIsArray(field, d, false)
-    }
-    checkString(d.CoverageDeductible, false, field + '.CoverageDeductible')
-    checkString(d.CoverageLimit, false, field + '.CoverageLimit')
-    checkString(d.DriversLicense, false, field + '.DriversLicense')
-    checkString(d.LogoFileName, false, field + '.LogoFileName')
-    checkString(
-      d.PolicyCompanyAddressLine1,
-      false,
-      field + '.PolicyCompanyAddressLine1'
-    )
-    checkString(
-      d.PolicyCompanyAddressLine2,
-      false,
-      field + '.PolicyCompanyAddressLine2'
-    )
-    checkString(
-      d.PolicyCompanyAddressLine3,
-      false,
-      field + '.PolicyCompanyAddressLine3'
-    )
-    checkArray(d.PolicyCompanyCode, field + '.PolicyCompanyCode')
-    if (d.PolicyCompanyCode) {
-      for (let i = 0; i < d.PolicyCompanyCode.length; i++) {
-        d.PolicyCompanyCode[i] = PolicyCompanyCodeEntityProxy.Create(
-          d.PolicyCompanyCode[i],
-          field + '.PolicyCompanyCode[' + i + ']'
-        )
-      }
-    }
-    if (d.PolicyCompanyCode === undefined) {
-      d.PolicyCompanyCode = null
-    }
-    checkString(d.PolicyCompanyName, false, field + '.PolicyCompanyName')
-    checkString(
-      d.PolicyCompanyPhoneNumber,
-      false,
-      field + '.PolicyCompanyPhoneNumber'
-    )
-    checkString(d.PolicyCompanyState, false, field + '.PolicyCompanyState')
-    checkString(d.PolicyCompanyWebsite, false, field + '.PolicyCompanyWebsite')
-    checkString(d.PolicyCompanyZip, false, field + '.PolicyCompanyZip')
-    checkString(
-      d.PolicyCoverageDescription,
-      false,
-      field + '.PolicyCoverageDescription'
-    )
-    checkString(d.PolicyEffectiveDate, false, field + '.PolicyEffectiveDate')
-    checkString(
-      d.PolicyHolderAddressLine1,
-      false,
-      field + '.PolicyHolderAddressLine1'
-    )
-    checkString(
-      d.PolicyHolderBirthdate,
-      false,
-      field + '.PolicyHolderBirthdate'
-    )
-    checkString(
-      d.PolicyHolderCellNumber,
-      false,
-      field + '.PolicyHolderCellNumber'
-    )
-    checkString(d.PolicyHolderCity, false, field + '.PolicyHolderCity')
-    checkString(d.PolicyHolderEmail, false, field + '.PolicyHolderEmail')
-    checkString(d.PolicyHolderMidname, false, field + '.PolicyHolderMidname')
-    checkString(d.PolicyHolderName, false, field + '.PolicyHolderName')
-    checkString(
-      d.PolicyHolderPhoneNumber,
-      false,
-      field + '.PolicyHolderPhoneNumber'
-    )
-    checkString(d.PolicyHolderRole, false, field + '.PolicyHolderRole')
-    checkString(
-      d.PolicyHolderSocialSecurityNumber,
-      false,
-      field + '.PolicyHolderSocialSecurityNumber'
-    )
-    checkString(d.PolicyHolderState, false, field + '.PolicyHolderState')
-    checkString(d.PolicyHolderSurname, false, field + '.PolicyHolderSurname')
-    checkString(d.PolicyHolderZip, false, field + '.PolicyHolderZip')
-    checkString(d.PolicyNumber, false, field + '.PolicyNumber')
-    checkString(d.VIN, false, field + '.VIN')
-    checkString(d.VehicleMake, false, field + '.VehicleMake')
-    checkString(d.VehicleModel, false, field + '.VehicleModel')
-    checkString(d.VehicleYear, false, field + '.VehicleYear')
-    return new PolicyProxy(d)
-  }
-  private constructor(d: any) {
-    this.CoverageDeductible = d.CoverageDeductible
-    this.CoverageLimit = d.CoverageLimit
-    this.DriversLicense = d.DriversLicense
-    this.LogoFileName = d.LogoFileName
-    this.PolicyCompanyAddressLine1 = d.PolicyCompanyAddressLine1
-    this.PolicyCompanyAddressLine2 = d.PolicyCompanyAddressLine2
-    this.PolicyCompanyAddressLine3 = d.PolicyCompanyAddressLine3
-    this.PolicyCompanyCode = d.PolicyCompanyCode
-    this.PolicyCompanyName = d.PolicyCompanyName
-    this.PolicyCompanyPhoneNumber = d.PolicyCompanyPhoneNumber
-    this.PolicyCompanyState = d.PolicyCompanyState
-    this.PolicyCompanyWebsite = d.PolicyCompanyWebsite
-    this.PolicyCompanyZip = d.PolicyCompanyZip
-    this.PolicyCoverageDescription = d.PolicyCoverageDescription
-    this.PolicyEffectiveDate = d.PolicyEffectiveDate
-    this.PolicyHolderAddressLine1 = d.PolicyHolderAddressLine1
-    this.PolicyHolderBirthdate = d.PolicyHolderBirthdate
-    this.PolicyHolderCellNumber = d.PolicyHolderCellNumber
-    this.PolicyHolderCity = d.PolicyHolderCity
-    this.PolicyHolderEmail = d.PolicyHolderEmail
-    this.PolicyHolderMidname = d.PolicyHolderMidname
-    this.PolicyHolderName = d.PolicyHolderName
-    this.PolicyHolderPhoneNumber = d.PolicyHolderPhoneNumber
-    this.PolicyHolderRole = d.PolicyHolderRole
-    this.PolicyHolderSocialSecurityNumber = d.PolicyHolderSocialSecurityNumber
-    this.PolicyHolderState = d.PolicyHolderState
-    this.PolicyHolderSurname = d.PolicyHolderSurname
-    this.PolicyHolderZip = d.PolicyHolderZip
-    this.PolicyNumber = d.PolicyNumber
-    this.VIN = d.VIN
-    this.VehicleMake = d.VehicleMake
-    this.VehicleModel = d.VehicleModel
-    this.VehicleYear = d.VehicleYear
-  }
-}
-
-export class PolicyCompanyCodeEntityProxy {
-  public readonly PCData: string
-  public static Parse(d: string): PolicyCompanyCodeEntityProxy {
-    return PolicyCompanyCodeEntityProxy.Create(JSON.parse(d))
-  }
-  public static Create(
-    d: any,
-    field: string = 'root'
-  ): PolicyCompanyCodeEntityProxy {
-    if (!field) {
-      obj = d
-      field = 'root'
-    }
-    if (d === null || d === undefined) {
-      throwNull2NonNull(field, d)
-    } else if (typeof d !== 'object') {
-      throwNotObject(field, d, false)
-    } else if (Array.isArray(d)) {
-      throwIsArray(field, d, false)
-    }
-    checkString(d.PCData, false, field + '.PCData')
-    return new PolicyCompanyCodeEntityProxy(d)
-  }
-  private constructor(d: any) {
-    this.PCData = d.PCData
-  }
-}
-
-export class PoliciesProxy {
-  public readonly Data: Data1Proxy
-  public static Parse(d: string): PoliciesProxy {
-    return PoliciesProxy.Create(JSON.parse(d))
-  }
-  public static Create(d: any, field: string = 'root'): PoliciesProxy {
-    if (!field) {
-      obj = d
-      field = 'root'
-    }
-    if (d === null || d === undefined) {
-      throwNull2NonNull(field, d)
-    } else if (typeof d !== 'object') {
-      throwNotObject(field, d, false)
-    } else if (Array.isArray(d)) {
-      throwIsArray(field, d, false)
-    }
-    d.Data = Data1Proxy.Create(d.Data, field + '.Data')
-    return new PoliciesProxy(d)
-  }
-  private constructor(d: any) {
-    this.Data = d.Data
-  }
-}
-
-export class Data1Proxy {
-  public readonly PolicyHolder: PolicyHolderProxy
-  public readonly AutoInsurance: AutoInsurance1Proxy
-  public readonly PolicyNumber: string
-  public readonly PolicyEffectiveDate: string
-  public readonly PolicyCoverageDescription: string
-  public readonly CoverageLimit: string
-  public readonly CoverageDeductible: string
-  public readonly Company: CompanyProxy
-  public readonly LogoFileName: string
-  public static Parse(d: string): Data1Proxy {
-    return Data1Proxy.Create(JSON.parse(d))
-  }
-  public static Create(d: any, field: string = 'root'): Data1Proxy {
-    if (!field) {
-      obj = d
-      field = 'root'
-    }
-    if (d === null || d === undefined) {
-      throwNull2NonNull(field, d)
-    } else if (typeof d !== 'object') {
-      throwNotObject(field, d, false)
-    } else if (Array.isArray(d)) {
-      throwIsArray(field, d, false)
-    }
-    d.PolicyHolder = PolicyHolderProxy.Create(
-      d.PolicyHolder,
-      field + '.PolicyHolder'
-    )
-    d.AutoInsurance = AutoInsurance1Proxy.Create(
-      d.AutoInsurance,
-      field + '.AutoInsurance'
-    )
-    checkString(d.PolicyNumber, false, field + '.PolicyNumber')
-    checkString(d.PolicyEffectiveDate, false, field + '.PolicyEffectiveDate')
-    checkString(
-      d.PolicyCoverageDescription,
-      false,
-      field + '.PolicyCoverageDescription'
-    )
-    checkString(d.CoverageLimit, false, field + '.CoverageLimit')
-    checkString(d.CoverageDeductible, false, field + '.CoverageDeductible')
-    d.Company = CompanyProxy.Create(d.Company, field + '.Company')
-    checkString(d.LogoFileName, false, field + '.LogoFileName')
-    return new Data1Proxy(d)
-  }
-  private constructor(d: any) {
-    this.PolicyHolder = d.PolicyHolder
-    this.AutoInsurance = d.AutoInsurance
-    this.PolicyNumber = d.PolicyNumber
-    this.PolicyEffectiveDate = d.PolicyEffectiveDate
-    this.PolicyCoverageDescription = d.PolicyCoverageDescription
-    this.CoverageLimit = d.CoverageLimit
-    this.CoverageDeductible = d.CoverageDeductible
-    this.Company = d.Company
-    this.LogoFileName = d.LogoFileName
-  }
-}
-
-export class PolicyHolderProxy {
-  public readonly Name: string
-  public readonly Midname: string
-  public readonly Surname: string
-  public readonly AddressLines: AddressLinesEntityProxy[] | null
-  public readonly City: string
-  public readonly Zip: string
-  public readonly State: string
-  public readonly Email: string
-  public readonly Birthdate: string
-  public readonly PhoneNumber: string
-  public readonly CellNumber: string
-  public readonly SocialSecurityNumber: string
-  public readonly Role: string
-  public static Parse(d: string): PolicyHolderProxy {
-    return PolicyHolderProxy.Create(JSON.parse(d))
-  }
-  public static Create(d: any, field: string = 'root'): PolicyHolderProxy {
-    if (!field) {
-      obj = d
-      field = 'root'
-    }
-    if (d === null || d === undefined) {
-      throwNull2NonNull(field, d)
-    } else if (typeof d !== 'object') {
-      throwNotObject(field, d, false)
-    } else if (Array.isArray(d)) {
-      throwIsArray(field, d, false)
-    }
-    checkString(d.Name, false, field + '.Name')
-    checkString(d.Midname, false, field + '.Midname')
-    checkString(d.Surname, false, field + '.Surname')
-    checkArray(d.AddressLines, field + '.AddressLines')
-    if (d.AddressLines) {
-      for (let i = 0; i < d.AddressLines.length; i++) {
-        d.AddressLines[i] = AddressLinesEntityProxy.Create(
-          d.AddressLines[i],
-          field + '.AddressLines[' + i + ']'
-        )
-      }
-    }
-    if (d.AddressLines === undefined) {
-      d.AddressLines = null
-    }
-    checkString(d.City, false, field + '.City')
-    checkString(d.Zip, false, field + '.Zip')
-    checkString(d.State, false, field + '.State')
-    checkString(d.Email, false, field + '.Email')
-    checkString(d.Birthdate, false, field + '.Birthdate')
-    checkString(d.PhoneNumber, false, field + '.PhoneNumber')
-    checkString(d.CellNumber, false, field + '.CellNumber')
-    checkString(d.SocialSecurityNumber, false, field + '.SocialSecurityNumber')
-    checkString(d.Role, false, field + '.Role')
-    return new PolicyHolderProxy(d)
-  }
-  private constructor(d: any) {
-    this.Name = d.Name
-    this.Midname = d.Midname
-    this.Surname = d.Surname
-    this.AddressLines = d.AddressLines
-    this.City = d.City
-    this.Zip = d.Zip
-    this.State = d.State
-    this.Email = d.Email
-    this.Birthdate = d.Birthdate
-    this.PhoneNumber = d.PhoneNumber
-    this.CellNumber = d.CellNumber
-    this.SocialSecurityNumber = d.SocialSecurityNumber
-    this.Role = d.Role
-  }
-}
-
-export class AutoInsurance1Proxy {
-  public readonly VehicleYear: string
-  public readonly VehicleMake: string
-  public readonly VehicleModel: string
-  public readonly VIN: string
-  public readonly DriversLicense: string
-  public static Parse(d: string): AutoInsurance1Proxy {
-    return AutoInsurance1Proxy.Create(JSON.parse(d))
-  }
-  public static Create(d: any, field: string = 'root'): AutoInsurance1Proxy {
-    if (!field) {
-      obj = d
-      field = 'root'
-    }
-    if (d === null || d === undefined) {
-      throwNull2NonNull(field, d)
-    } else if (typeof d !== 'object') {
-      throwNotObject(field, d, false)
-    } else if (Array.isArray(d)) {
-      throwIsArray(field, d, false)
-    }
-    checkString(d.VehicleYear, false, field + '.VehicleYear')
-    checkString(d.VehicleMake, false, field + '.VehicleMake')
-    checkString(d.VehicleModel, false, field + '.VehicleModel')
-    checkString(d.VIN, false, field + '.VIN')
-    checkString(d.DriversLicense, false, field + '.DriversLicense')
-    return new AutoInsurance1Proxy(d)
-  }
-  private constructor(d: any) {
-    this.VehicleYear = d.VehicleYear
-    this.VehicleMake = d.VehicleMake
-    this.VehicleModel = d.VehicleModel
-    this.VIN = d.VIN
-    this.DriversLicense = d.DriversLicense
-  }
-}
-
-export class CompanyProxy {
-  public readonly Code: string
-  public readonly Name: string
-  public readonly AddressLines: AddressLinesEntityProxy[] | null
-  public readonly City: string
-  public readonly Zip: string
-  public readonly State: string
-  public readonly PhoneNumber: string
-  public readonly Website: string
-  public static Parse(d: string): CompanyProxy {
-    return CompanyProxy.Create(JSON.parse(d))
-  }
-  public static Create(d: any, field: string = 'root'): CompanyProxy {
-    if (!field) {
-      obj = d
-      field = 'root'
-    }
-    if (d === null || d === undefined) {
-      throwNull2NonNull(field, d)
-    } else if (typeof d !== 'object') {
-      throwNotObject(field, d, false)
-    } else if (Array.isArray(d)) {
-      throwIsArray(field, d, false)
-    }
-    checkString(d.Code, false, field + '.Code')
-    checkString(d.Name, false, field + '.Name')
-    checkArray(d.AddressLines, field + '.AddressLines')
-    if (d.AddressLines) {
-      for (let i = 0; i < d.AddressLines.length; i++) {
-        d.AddressLines[i] = AddressLinesEntityProxy.Create(
-          d.AddressLines[i],
-          field + '.AddressLines[' + i + ']'
-        )
-      }
-    }
-    if (d.AddressLines === undefined) {
-      d.AddressLines = null
-    }
-    checkString(d.City, false, field + '.City')
-    checkString(d.Zip, false, field + '.Zip')
-    checkString(d.State, false, field + '.State')
-    checkString(d.PhoneNumber, false, field + '.PhoneNumber')
-    checkString(d.Website, false, field + '.Website')
-    return new CompanyProxy(d)
-  }
-  private constructor(d: any) {
-    this.Code = d.Code
-    this.Name = d.Name
-    this.AddressLines = d.AddressLines
-    this.City = d.City
-    this.Zip = d.Zip
-    this.State = d.State
-    this.PhoneNumber = d.PhoneNumber
-    this.Website = d.Website
-  }
-}
-
-export class OthersProxy {
-  public readonly Key: string
-  public readonly Value: string
-  public static Parse(d: string): OthersProxy {
-    return OthersProxy.Create(JSON.parse(d))
-  }
-  public static Create(d: any, field: string = 'root'): OthersProxy {
-    if (!field) {
-      obj = d
-      field = 'root'
-    }
-    if (d === null || d === undefined) {
-      throwNull2NonNull(field, d)
-    } else if (typeof d !== 'object') {
-      throwNotObject(field, d, false)
-    } else if (Array.isArray(d)) {
-      throwIsArray(field, d, false)
-    }
-    checkString(d.Key, false, field + '.Key')
-    checkString(d.Value, false, field + '.Value')
-    return new OthersProxy(d)
-  }
-  private constructor(d: any) {
-    this.Key = d.Key
-    this.Value = d.Value
-  }
-}
-
-function throwNull2NonNull(field: string, d: any): never {
-  return errorHelper(field, d, 'non-nullable object', false)
-}
-function throwNotObject(field: string, d: any, nullable: boolean): never {
-  return errorHelper(field, d, 'object', nullable)
-}
-function throwIsArray(field: string, d: any, nullable: boolean): never {
-  return errorHelper(field, d, 'object', nullable)
-}
-function checkArray(d: any, field: string): void {
-  if (!Array.isArray(d) && d !== null && d !== undefined) {
-    errorHelper(field, d, 'array', true)
-  }
-}
-function checkString(d: any, nullable: boolean, field: string): void {
-  if (
-    typeof d !== 'string' &&
-    (!nullable || (nullable && d !== null && d !== undefined))
-  ) {
-    errorHelper(field, d, 'string', nullable)
-  }
-}
-function errorHelper(
-  field: string,
-  d: any,
-  type: string,
-  nullable: boolean
-): never {
-  if (nullable) {
-    type += ', null, or undefined'
-  }
-  throw new TypeError(
-    'Expected ' +
-      type +
-      ' at ' +
-      field +
-      ' but found:\n' +
-      JSON.stringify(d) +
-      '\n\nFull object:\n' +
-      JSON.stringify(obj)
+  throw Error(
+    `Invalid value ${JSON.stringify(val)} for type ${JSON.stringify(typ)}`
   )
 }
 
-export const ClaimsData = ClaimsDataProxy.Create(jsonObject)
+function jsonToJSProps(typ: any): any {
+  if (typ.jsonToJS === undefined) {
+    const map: any = {}
+    typ.props.forEach((p: any) => (map[p.json] = { key: p.js, typ: p.typ }))
+    typ.jsonToJS = map
+  }
+  return typ.jsonToJS
+}
+
+function jsToJSONProps(typ: any): any {
+  if (typ.jsToJSON === undefined) {
+    const map: any = {}
+    typ.props.forEach((p: any) => (map[p.js] = { key: p.json, typ: p.typ }))
+    typ.jsToJSON = map
+  }
+  return typ.jsToJSON
+}
+
+function transform(val: any, typ: any, getProps: any, key: any = ''): any {
+  function transformPrimitive(typ: string, val: any): any {
+    if (typeof typ === typeof val) return val
+    return invalidValue(typ, val, key)
+  }
+
+  function transformUnion(typs: any[], val: any): any {
+    // val must validate against one typ in typs
+    const l = typs.length
+    for (let i = 0; i < l; i++) {
+      const typ = typs[i]
+      try {
+        return transform(val, typ, getProps)
+      } catch (_) {}
+    }
+    return invalidValue(typs, val)
+  }
+
+  function transformEnum(cases: string[], val: any): any {
+    if (cases.indexOf(val) !== -1) return val
+    return invalidValue(cases, val)
+  }
+
+  function transformArray(typ: any, val: any): any {
+    // val must be an array with no invalid elements
+    if (!Array.isArray(val)) return invalidValue('array', val)
+    return val.map((el) => transform(el, typ, getProps))
+  }
+
+  function transformDate(val: any): any {
+    if (val === null) {
+      return null
+    }
+    const d = new Date(val)
+    if (isNaN(d.valueOf())) {
+      return invalidValue('Date', val)
+    }
+    return d
+  }
+
+  function transformObject(
+    props: { [k: string]: any },
+    additional: any,
+    val: any
+  ): any {
+    if (val === null || typeof val !== 'object' || Array.isArray(val)) {
+      return invalidValue('object', val)
+    }
+    const result: any = {}
+    Object.getOwnPropertyNames(props).forEach((key) => {
+      const prop = props[key]
+      const v = Object.prototype.hasOwnProperty.call(val, key)
+        ? val[key]
+        : undefined
+      result[prop.key] = transform(v, prop.typ, getProps, prop.key)
+    })
+    Object.getOwnPropertyNames(val).forEach((key) => {
+      if (!Object.prototype.hasOwnProperty.call(props, key)) {
+        result[key] = transform(val[key], additional, getProps, key)
+      }
+    })
+    return result
+  }
+
+  if (typ === 'any') return val
+  if (typ === null) {
+    if (val === null) return val
+    return invalidValue(typ, val)
+  }
+  if (typ === false) return invalidValue(typ, val)
+  while (typeof typ === 'object' && typ.ref !== undefined) {
+    typ = typeMap[typ.ref]
+  }
+  if (Array.isArray(typ)) return transformEnum(typ, val)
+  if (typeof typ === 'object') {
+    return typ.hasOwnProperty('unionMembers')
+      ? transformUnion(typ.unionMembers, val)
+      : typ.hasOwnProperty('arrayItems')
+      ? transformArray(typ.arrayItems, val)
+      : typ.hasOwnProperty('props')
+      ? transformObject(getProps(typ), typ.additional, val)
+      : invalidValue(typ, val)
+  }
+  // Numbers can be parsed by Date but shouldn't be.
+  if (typ === Date && typeof val !== 'number') return transformDate(val)
+  return transformPrimitive(typ, val)
+}
+
+function cast<T>(val: any, typ: any): T {
+  return transform(val, typ, jsonToJSProps)
+}
+
+function uncast<T>(val: T, typ: any): any {
+  return transform(val, typ, jsToJSONProps)
+}
+
+function a(typ: any) {
+  return { arrayItems: typ }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function u(...typs: any[]) {
+  return { unionMembers: typs }
+}
+
+function o(props: any[], additional: any) {
+  return { props, additional }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function m(additional: any) {
+  return { props: [], additional }
+}
+
+function r(name: string) {
+  return { ref: name }
+}
+
+const typeMap: any = {
+  ClaimsDataModel: o(
+    [{ json: 'Clients', js: 'Clients', typ: a(r('Client')) }],
+    false
+  ),
+  Client: o(
+    [
+      { json: 'ClientID', js: 'ClientID', typ: '' },
+      { json: 'MailFrom', js: 'MailFrom', typ: '' },
+      { json: 'TicketAsignee', js: 'TicketAsignee', typ: '' },
+      { json: 'FirstName', js: 'FirstName', typ: '' },
+      { json: 'Midname', js: 'Midname', typ: '' },
+      { json: 'LastName', js: 'LastName', typ: '' },
+      { json: 'Gender', js: 'Gender', typ: '' },
+      { json: 'Title', js: 'Title', typ: '' },
+      { json: 'Salutation', js: 'Salutation', typ: '' },
+      { json: 'Language', js: 'Language', typ: '' },
+      { json: 'AddressSalutation', js: 'AddressSalutation', typ: '' },
+      { json: 'AddressLines', js: 'AddressLines', typ: a(r('AddressLine')) },
+      { json: 'City', js: 'City', typ: '' },
+      { json: 'Zip', js: 'Zip', typ: '' },
+      { json: 'State', js: 'State', typ: '' },
+      { json: 'StateAbbreviation', js: 'StateAbbreviation', typ: '' },
+      { json: 'Country', js: 'Country', typ: '' },
+      { json: 'Email', js: 'Email', typ: '' },
+      { json: 'PolicyType', js: 'PolicyType', typ: '' },
+      { json: 'Role', js: 'Role', typ: '' },
+      { json: 'Age', js: 'Age', typ: '' },
+      { json: 'DateOfBirth', js: 'DateOfBirth', typ: '' },
+      { json: 'SocialSecurityNumber', js: 'SocialSecurityNumber', typ: '' },
+      { json: 'PhoneNumber', js: 'PhoneNumber', typ: '' },
+      { json: 'CellNumber', js: 'CellNumber', typ: '' },
+      { json: 'DriversLicenseNumber', js: 'DriversLicenseNumber', typ: '' },
+      { json: 'FraudIndicator', js: 'FraudIndicator', typ: '' },
+      { json: 'ChannelPreference', js: 'ChannelPreference', typ: '' },
+      { json: 'Subject', js: 'Subject', typ: '' },
+      { json: 'FollowUpDate', js: 'FollowUpDate', typ: '' },
+      { json: 'Template', js: 'Template', typ: '' },
+      { json: 'FreeFormVariable1', js: 'FreeFormVariable1', typ: '' },
+      { json: 'FreeFormVariable2', js: 'FreeFormVariable2', typ: '' },
+      { json: 'FreeFormVariable3', js: 'FreeFormVariable3', typ: '' },
+      { json: 'FreeFormVariable4', js: 'FreeFormVariable4', typ: '' },
+      { json: 'FreeFormVariable5', js: 'FreeFormVariable5', typ: '' },
+      { json: 'FreeFormVariable6', js: 'FreeFormVariable6', typ: '' },
+      { json: 'FreeFormVariable7', js: 'FreeFormVariable7', typ: '' },
+      { json: 'FreeFormVariable8', js: 'FreeFormVariable8', typ: '' },
+      { json: 'FreeFormVariable9', js: 'FreeFormVariable9', typ: '' },
+      { json: 'FreeFormVariable10', js: 'FreeFormVariable10', typ: '' },
+      {
+        json: 'ClaimsRepresentative',
+        js: 'ClaimsRepresentative',
+        typ: r('ClaimsRepresentative'),
+      },
+      { json: 'Claim', js: 'Claim', typ: r('Claim') },
+      { json: 'Author', js: 'Author', typ: r('Author') },
+      { json: 'Party', js: 'Party', typ: r('Party') },
+      { json: 'Dependents', js: 'Dependents', typ: r('Dependents') },
+      { json: 'Policy', js: 'Policy', typ: r('Policy') },
+      { json: 'Policies', js: 'Policies', typ: r('Policies') },
+      { json: 'Others', js: 'Others', typ: r('Others') },
+    ],
+    false
+  ),
+  AddressLine: o([{ json: 'AddressLine', js: 'AddressLine', typ: '' }], false),
+  Author: o(
+    [
+      { json: 'FirstName', js: 'FirstName', typ: '' },
+      { json: 'Midname', js: 'Midname', typ: '' },
+      { json: 'LastName', js: 'LastName', typ: '' },
+      { json: 'Email', js: 'Email', typ: '' },
+      { json: 'PhoneNumber', js: 'PhoneNumber', typ: '' },
+      { json: 'PhoneNumberExt', js: 'PhoneNumberExt', typ: '' },
+      { json: 'CellNumber', js: 'CellNumber', typ: '' },
+      { json: 'Job', js: 'Job', typ: '' },
+      { json: 'Image', js: 'Image', typ: '' },
+      { json: 'Signature', js: 'Signature', typ: '' },
+    ],
+    false
+  ),
+  Claim: o(
+    [
+      { json: 'Number', js: 'Number', typ: '' },
+      { json: 'Date', js: 'Date', typ: '' },
+      { json: 'DateOfLoss', js: 'DateOfLoss', typ: '' },
+      { json: 'TimeOfLoss', js: 'TimeOfLoss', typ: '' },
+      { json: 'AmountDemanded', js: 'AmountDemanded', typ: '' },
+      { json: 'Location', js: 'Location', typ: '' },
+      { json: 'State', js: 'State', typ: '' },
+      { json: 'LossDescription', js: 'LossDescription', typ: '' },
+      { json: 'InjuryDescription', js: 'InjuryDescription', typ: '' },
+      { json: 'SpouseName', js: 'SpouseName', typ: '' },
+      { json: 'NumberOfDependents', js: 'NumberOfDependents', typ: '' },
+      { json: 'DeathDate', js: 'DeathDate', typ: '' },
+      { json: 'SubrogationAmount', js: 'SubrogationAmount', typ: '' },
+      { json: 'SalvageAmount', js: 'SalvageAmount', typ: '' },
+      { json: 'PaidClaimAmount', js: 'PaidClaimAmount', typ: '' },
+      { json: 'VehicleActualCashValue', js: 'VehicleActualCashValue', typ: '' },
+      { json: 'ArbitrationDate', js: 'ArbitrationDate', typ: '' },
+      { json: 'SettlementAmount', js: 'SettlementAmount', typ: '' },
+      { json: 'LetterReceivedDate', js: 'LetterReceivedDate', typ: '' },
+      { json: 'ClaimantCompanyName', js: 'ClaimantCompanyName', typ: '' },
+      { json: 'CaseDescription', js: 'CaseDescription', typ: '' },
+      { json: 'CaseDateFiled', js: 'CaseDateFiled', typ: '' },
+      { json: 'CaseNumber', js: 'CaseNumber', typ: '' },
+      {
+        json: 'AutoInsurance',
+        js: 'AutoInsurance',
+        typ: r('ClaimAutoInsurance'),
+      },
+    ],
+    false
+  ),
+  ClaimAutoInsurance: o(
+    [
+      { json: 'PreApprovalDate', js: 'PreApprovalDate', typ: '' },
+      { json: 'InsuredSince', js: 'InsuredSince', typ: '' },
+      { json: 'VehicleYear', js: 'VehicleYear', typ: '' },
+      { json: 'VehicleMake', js: 'VehicleMake', typ: '' },
+      { json: 'VehicleModel', js: 'VehicleModel', typ: '' },
+      { json: 'VIN', js: 'VIN', typ: '' },
+      { json: 'VehicleDamage', js: 'VehicleDamage', typ: '' },
+      { json: 'VehicleLicenseNumber', js: 'VehicleLicenseNumber', typ: '' },
+      { json: 'Mileage', js: 'Mileage', typ: '' },
+      { json: 'PreviousPremium', js: 'PreviousPremium', typ: '' },
+      { json: 'NewPremium', js: 'NewPremium', typ: '' },
+    ],
+    false
+  ),
+  ClaimsRepresentative: o(
+    [
+      { json: 'FirstName', js: 'FirstName', typ: '' },
+      { json: 'LastName', js: 'LastName', typ: '' },
+      { json: 'AddressLines', js: 'AddressLines', typ: a(r('AddressLine')) },
+      { json: 'City', js: 'City', typ: '' },
+      { json: 'State', js: 'State', typ: '' },
+      { json: 'Zip', js: 'Zip', typ: '' },
+      { json: 'PhoneNumber', js: 'PhoneNumber', typ: '' },
+      { json: 'Email', js: 'Email', typ: '' },
+      { json: 'CellNumber', js: 'CellNumber', typ: '' },
+    ],
+    false
+  ),
+  Dependents: o([{ json: 'Data', js: 'Data', typ: a(r('Datum')) }], false),
+  Datum: o(
+    [
+      { json: 'Name', js: 'Name', typ: '' },
+      { json: 'Midname', js: 'Midname', typ: '' },
+      { json: 'Surname', js: 'Surname', typ: '' },
+      { json: 'Gender', js: 'Gender', typ: '' },
+      { json: 'Email', js: 'Email', typ: '' },
+      {
+        json: 'MedicalProvider',
+        js: 'MedicalProvider',
+        typ: r('MedicalProvider'),
+      },
+    ],
+    false
+  ),
+  MedicalProvider: o(
+    [
+      { json: 'Name', js: 'Name', typ: '' },
+      { json: 'AddressLines', js: 'AddressLines', typ: a(r('AddressLine')) },
+      { json: 'City', js: 'City', typ: '' },
+      { json: 'Zip', js: 'Zip', typ: '' },
+      { json: 'State', js: 'State', typ: '' },
+    ],
+    false
+  ),
+  Others: o(
+    [
+      { json: 'Key', js: 'Key', typ: '' },
+      { json: 'Value', js: 'Value', typ: '' },
+    ],
+    false
+  ),
+  Party: o([{ json: 'Data', js: 'Data', typ: r('PartyData') }], false),
+  PartyData: o(
+    [
+      { json: 'Name', js: 'Name', typ: '' },
+      { json: 'Midname', js: 'Midname', typ: '' },
+      { json: 'Surname', js: 'Surname', typ: '' },
+      { json: 'Title', js: 'Title', typ: '' },
+      { json: 'Company', js: 'Company', typ: '' },
+      { json: 'AddressLines', js: 'AddressLines', typ: a(r('AddressLine')) },
+      { json: 'City', js: 'City', typ: '' },
+      { json: 'Zip', js: 'Zip', typ: '' },
+      { json: 'State', js: 'State', typ: '' },
+      { json: 'Role', js: 'Role', typ: '' },
+      { json: 'WebSite', js: 'WebSite', typ: '' },
+      { json: 'Email', js: 'Email', typ: '' },
+      { json: 'ProviderTINnumber', js: 'ProviderTINnumber', typ: '' },
+    ],
+    false
+  ),
+  Policies: o([{ json: 'Data', js: 'Data', typ: r('PoliciesData') }], false),
+  PoliciesData: o(
+    [
+      { json: 'PolicyHolder', js: 'PolicyHolder', typ: r('PolicyHolder') },
+      {
+        json: 'AutoInsurance',
+        js: 'AutoInsurance',
+        typ: r('DataAutoInsurance'),
+      },
+      { json: 'PolicyNumber', js: 'PolicyNumber', typ: '' },
+      { json: 'PolicyEffectiveDate', js: 'PolicyEffectiveDate', typ: '' },
+      {
+        json: 'PolicyCoverageDescription',
+        js: 'PolicyCoverageDescription',
+        typ: '',
+      },
+      { json: 'CoverageLimit', js: 'CoverageLimit', typ: '' },
+      { json: 'CoverageDeductible', js: 'CoverageDeductible', typ: '' },
+      { json: 'Company', js: 'Company', typ: r('Company') },
+      { json: 'LogoFileName', js: 'LogoFileName', typ: '' },
+    ],
+    false
+  ),
+  DataAutoInsurance: o(
+    [
+      { json: 'VehicleYear', js: 'VehicleYear', typ: '' },
+      { json: 'VehicleMake', js: 'VehicleMake', typ: '' },
+      { json: 'VehicleModel', js: 'VehicleModel', typ: '' },
+      { json: 'VIN', js: 'VIN', typ: '' },
+      { json: 'DriversLicense', js: 'DriversLicense', typ: '' },
+    ],
+    false
+  ),
+  Company: o(
+    [
+      { json: 'Code', js: 'Code', typ: '' },
+      { json: 'Name', js: 'Name', typ: '' },
+      { json: 'AddressLines', js: 'AddressLines', typ: a(r('AddressLine')) },
+      { json: 'City', js: 'City', typ: '' },
+      { json: 'Zip', js: 'Zip', typ: '' },
+      { json: 'State', js: 'State', typ: '' },
+      { json: 'PhoneNumber', js: 'PhoneNumber', typ: '' },
+      { json: 'Website', js: 'Website', typ: '' },
+    ],
+    false
+  ),
+  PolicyHolder: o(
+    [
+      { json: 'Name', js: 'Name', typ: '' },
+      { json: 'Midname', js: 'Midname', typ: '' },
+      { json: 'Surname', js: 'Surname', typ: '' },
+      { json: 'AddressLines', js: 'AddressLines', typ: a(r('AddressLine')) },
+      { json: 'City', js: 'City', typ: '' },
+      { json: 'Zip', js: 'Zip', typ: '' },
+      { json: 'State', js: 'State', typ: '' },
+      { json: 'Email', js: 'Email', typ: '' },
+      { json: 'Birthdate', js: 'Birthdate', typ: '' },
+      { json: 'PhoneNumber', js: 'PhoneNumber', typ: '' },
+      { json: 'CellNumber', js: 'CellNumber', typ: '' },
+      { json: 'SocialSecurityNumber', js: 'SocialSecurityNumber', typ: '' },
+      { json: 'Role', js: 'Role', typ: '' },
+    ],
+    false
+  ),
+  Policy: o(
+    [
+      { json: 'CoverageDeductible', js: 'CoverageDeductible', typ: '' },
+      { json: 'CoverageLimit', js: 'CoverageLimit', typ: '' },
+      { json: 'DriversLicense', js: 'DriversLicense', typ: '' },
+      { json: 'LogoFileName', js: 'LogoFileName', typ: '' },
+      {
+        json: 'PolicyCompanyAddressLine1',
+        js: 'PolicyCompanyAddressLine1',
+        typ: '',
+      },
+      {
+        json: 'PolicyCompanyAddressLine2',
+        js: 'PolicyCompanyAddressLine2',
+        typ: '',
+      },
+      {
+        json: 'PolicyCompanyAddressLine3',
+        js: 'PolicyCompanyAddressLine3',
+        typ: '',
+      },
+      {
+        json: 'PolicyCompanyCode',
+        js: 'PolicyCompanyCode',
+        typ: a(r('PolicyCompanyCode')),
+      },
+      { json: 'PolicyCompanyName', js: 'PolicyCompanyName', typ: '' },
+      {
+        json: 'PolicyCompanyPhoneNumber',
+        js: 'PolicyCompanyPhoneNumber',
+        typ: '',
+      },
+      { json: 'PolicyCompanyState', js: 'PolicyCompanyState', typ: '' },
+      { json: 'PolicyCompanyWebsite', js: 'PolicyCompanyWebsite', typ: '' },
+      { json: 'PolicyCompanyZip', js: 'PolicyCompanyZip', typ: '' },
+      {
+        json: 'PolicyCoverageDescription',
+        js: 'PolicyCoverageDescription',
+        typ: '',
+      },
+      { json: 'PolicyEffectiveDate', js: 'PolicyEffectiveDate', typ: '' },
+      {
+        json: 'PolicyHolderAddressLine1',
+        js: 'PolicyHolderAddressLine1',
+        typ: '',
+      },
+      { json: 'PolicyHolderBirthdate', js: 'PolicyHolderBirthdate', typ: '' },
+      { json: 'PolicyHolderCellNumber', js: 'PolicyHolderCellNumber', typ: '' },
+      { json: 'PolicyHolderCity', js: 'PolicyHolderCity', typ: '' },
+      { json: 'PolicyHolderEmail', js: 'PolicyHolderEmail', typ: '' },
+      { json: 'PolicyHolderMidname', js: 'PolicyHolderMidname', typ: '' },
+      { json: 'PolicyHolderName', js: 'PolicyHolderName', typ: '' },
+      {
+        json: 'PolicyHolderPhoneNumber',
+        js: 'PolicyHolderPhoneNumber',
+        typ: '',
+      },
+      { json: 'PolicyHolderRole', js: 'PolicyHolderRole', typ: '' },
+      {
+        json: 'PolicyHolderSocialSecurityNumber',
+        js: 'PolicyHolderSocialSecurityNumber',
+        typ: '',
+      },
+      { json: 'PolicyHolderState', js: 'PolicyHolderState', typ: '' },
+      { json: 'PolicyHolderSurname', js: 'PolicyHolderSurname', typ: '' },
+      { json: 'PolicyHolderZip', js: 'PolicyHolderZip', typ: '' },
+      { json: 'PolicyNumber', js: 'PolicyNumber', typ: '' },
+      { json: 'VIN', js: 'VIN', typ: '' },
+      { json: 'VehicleMake', js: 'VehicleMake', typ: '' },
+      { json: 'VehicleModel', js: 'VehicleModel', typ: '' },
+      { json: 'VehicleYear', js: 'VehicleYear', typ: '' },
+    ],
+    false
+  ),
+  PolicyCompanyCode: o([{ json: 'PCData', js: 'PCData', typ: '' }], false),
+}
+
+export const ClaimsData = Convert.toClaimsDataModel(JSON.stringify(jsonObject))
