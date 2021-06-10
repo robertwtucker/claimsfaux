@@ -46,7 +46,7 @@ export default function NavHeader(_props: NavHeaderProps) {
           >
             <Box direction="row" align="center" justify="start" gap="xxsmall">
               <User />
-              <Text>Kevin Edwards</Text>
+              <Text>Michael Lee</Text>
               <FormDown />
             </Box>
           </Menu>
