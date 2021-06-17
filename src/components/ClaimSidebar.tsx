@@ -38,6 +38,9 @@ export default function ClaimSidebar(props: ClaimSidebarProps) {
         case 'Claim Data':
           history.push(`/claims/${claimId}/data`)
           break
+        case 'Documents':
+          history.push(`/claims/${claimId}/documents`)
+          break
         default:
         //no op
       }
