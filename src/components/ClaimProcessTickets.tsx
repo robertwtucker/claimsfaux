@@ -99,14 +99,14 @@ export default function ClaimProcessTickets(props: ClaimProcessTicketsProps) {
     const getTicketsForClaim = async () => {
       // TODO: Externalize URLs, keys and user auth
       const authParams = qs.stringify({
-        apiKey: 'KN0gla8.ANxI0Z82f38PCNGhZOrqIJWjBOjOc2jzXt0',
+        apiKey: '<api-key>',
         userName: 'writer',
       })
 
       try {
         const authResponse = await axios({
           method: 'POST',
-          url: 'https://inspiredemo.sptcloud.com/interactive/api/v1/access-token',
+          url: 'https://interactive-server/interactive/api/v1/access-token',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
@@ -116,7 +116,7 @@ export default function ClaimProcessTickets(props: ClaimProcessTicketsProps) {
         const listResponse =
           await axios.request<InteractiveProcessTicketListResponse>({
             method: 'GET',
-            url: 'https://inspiredemo.sptcloud.com/interactive/api/v1/interactive-process-ticket/list',
+            url: 'https://interactive-server/interactive/api/v1/interactive-process-ticket/list',
             headers: {
               Authorization: `Bearer ${authResponse.data}`,
             },
@@ -147,7 +147,7 @@ export default function ClaimProcessTickets(props: ClaimProcessTicketsProps) {
 
   const handleClick = (item: InteractiveProcessTicketListItem) => {
     if (item && item.guid) {
-      const url = `https://inspiredemo.sptcloud.com/interactive/?interactive-process-ticket-id=${item.guid}`
+      const url = `https://interactive-server/interactive/?interactive-process-ticket-id=${item.guid}`
       window.open(url, '_blank', 'noopener')
     }
   }

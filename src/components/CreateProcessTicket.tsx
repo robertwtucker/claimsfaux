@@ -121,14 +121,14 @@ export default function CreateProcessTicket(props: CreateProcessTicketProps) {
     const getInteractiveProcesses = async () => {
       // TODO: Externalize URLs, keys and user auth
       const authParams = qs.stringify({
-        apiKey: 'KN0gla8.ANxI0Z82f38PCNGhZOrqIJWjBOjOc2jzXt0',
+        apiKey: '<api-key>',
         userName: 'writer',
       })
 
       try {
         const authResponse = await axios({
           method: 'POST',
-          url: 'https://inspiredemo.sptcloud.com/interactive/api/v1/access-token',
+          url: 'https://interactive-server/interactive/api/v1/access-token',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
@@ -138,7 +138,7 @@ export default function CreateProcessTicket(props: CreateProcessTicketProps) {
         const listResponse =
           await axios.request<InteractiveProcessListResponseType>({
             method: 'GET',
-            url: 'https://inspiredemo.sptcloud.com/interactive/api/v1/interactive-process/list',
+            url: 'https://interactive-server/interactive/api/v1/interactive-process/list',
             headers: {
               Authorization: `Bearer ${authResponse.data}`,
             },
@@ -165,14 +165,14 @@ export default function CreateProcessTicket(props: CreateProcessTicketProps) {
   const handleClick = async (item: InteractiveProcessListItemType) => {
     // TODO: Externalize URLs, keys and user auth
     const authParams = qs.stringify({
-      apiKey: 'KN0gla8.ANxI0Z82f38PCNGhZOrqIJWjBOjOc2jzXt0',
+      apiKey: '<api-key>',
       userName: 'writer',
     })
 
     try {
       const authResponse = await axios({
         method: 'POST',
-        url: 'https://inspiredemo.sptcloud.com/interactive/api/v1/access-token',
+        url: 'https://interactive-server/interactive/api/v1/access-token',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
@@ -186,7 +186,7 @@ export default function CreateProcessTicket(props: CreateProcessTicketProps) {
       const executeResponse =
         await axios.request<ExecuteInteractiveProcessResponseType>({
           method: 'POST',
-          url: 'https://inspiredemo.sptcloud.com/interactive/api/v1/interactive-process/execute',
+          url: 'https://interactive-server/interactive/api/v1/interactive-process/execute',
           headers: {
             Authorization: `Bearer ${authResponse.data}`,
           },
@@ -198,7 +198,7 @@ export default function CreateProcessTicket(props: CreateProcessTicketProps) {
 
       const formDataResponse = await axios.request<FormDataPropsType>({
         method: 'GET',
-        url: `https://inspiredemo.sptcloud.com/interactive/api/v1/interactive-process-ticket/${guid}/dc-form/data`,
+        url: `https://interactive-server/interactive/api/v1/interactive-process-ticket/${guid}/dc-form/data`,
         headers: {
           Authorization: `Bearer ${authResponse.data}`,
         },
@@ -220,7 +220,7 @@ export default function CreateProcessTicket(props: CreateProcessTicketProps) {
 
         await axios({
           method: 'PUT',
-          url: `https://inspiredemo.sptcloud.com/interactive/api/v1/interactive-process-ticket/${guid}/dc-form/data`,
+          url: `https://interactive-server/interactive/api/v1/interactive-process-ticket/${guid}/dc-form/data`,
           headers: {
             Authorization: `Bearer ${authResponse.data}`,
             'Content-Type': 'application/json;charset=UTF-8',
